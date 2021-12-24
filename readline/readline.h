@@ -26,6 +26,8 @@
 extern "C" {
 #endif
 
+#define READLINE_LIBRARY
+
 #if defined (READLINE_LIBRARY)
 #  include "rlstdc.h"
 #  include "rltypedefs.h"

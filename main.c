@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/24 15:39:51 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:54:45 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include "readline/history.h"
 #include "readline/readline.h"
+#include "minishell.h"
 
 static void	action(int sig)
 {
@@ -25,11 +26,18 @@ static void	action(int sig)
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argv;
-	(void)envp;
+	char			*line;
+	t_shell_info 	info;
+
 	if (argc != 1)
 		return (1);
 	signal(SIGINT, action);
 	signal(SIGQUIT, action);
-	printf("%s\n", readline("minishell $> "));
+	while (1)
+	{
+		line = readline("minishell $> ");
+		info.envp = envp;
+		echo_test(line, &info);
+	}
 	return (0);
 }
