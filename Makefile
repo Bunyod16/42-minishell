@@ -7,18 +7,22 @@ CFLAGS = -Wall -Wextra -Werror -D READLINE_LIBRARY=1
 
 all: $(NAME)
 
-$(NAME): $(OBJECTS)
-	$(CC) -o $@ $^ -Llibreadline -lreadline
+$(NAME): $(OBJECTS) libft
+	$(CC) -o $@ $(OBJECTS) -Llibft -lft -Llibreadline -lreadline
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $?
 
+libft:
+	make -C libft
+
 clean:
 	rm -f $(OBJECTS)
+	make -C libft clean
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) libft/libft.a
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all libft clean fclean re
