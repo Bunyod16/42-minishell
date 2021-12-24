@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/24 21:36:20 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/24 21:37:05 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 static void	action(int sig)
 {
 	if (sig == SIGINT)
-		return ;
+		ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 static void	eof(void)
@@ -50,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell $> ");
 		if (!line || (*line && !ft_strncmp(line, "exit", ft_strlen(line))))
 			break ;
+		add_history(line);
 		printf("%s\n", line);
 		free(line);
 	}
