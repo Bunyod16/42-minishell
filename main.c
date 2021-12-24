@@ -23,7 +23,10 @@
 static void	action(int sig)
 {
 	if (sig == SIGINT)
-		return ;
+		ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 static void	eof(void)
@@ -83,9 +86,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		info.envp = envp;
 		line = readline("minishell $> ");
-		if (!line || !ft_strncmp(line, "exit", ft_strlen(line)))
+		if (!line || (ft_strlen(line) == 4 && !ft_strncmp(line, "exit", 4)))
 			break ;
 		process_line(line, &info);
+		add_history(line);
 		free(line);
 	}
 	eof();
