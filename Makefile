@@ -3,12 +3,12 @@ SOURCES = main.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -D READLINE_LIBRARY=1
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ -Llibreadline -lreadline
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $?
