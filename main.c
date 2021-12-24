@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/24 21:37:05 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/24 21:44:12 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell $> ");
-		if (!line || (*line && !ft_strncmp(line, "exit", ft_strlen(line))))
+		if (!line || (ft_strlen(line) == 4 && !ft_strncmp(line, "exit", 4)))
 			break ;
 		add_history(line);
 		printf("%s\n", line);
