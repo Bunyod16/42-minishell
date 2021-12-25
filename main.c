@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/25 15:15:36 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/25 18:45:20 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,6 @@
 #include "libreadline/history.h"
 #include "libreadline/readline.h"
 
-static void	init_info(t_shell_info *info, char **envp)
-{
-	int		i;
-	char	*prompt;
-
-	info->envp = envp;
-	i = -1;
-	while (envp[++i])
-	{
-		if (!ft_strncmp(envp[i], "USER=", 5))
-			info->user = envp[i] + 5;
-		else if (!ft_strncmp(envp[i], "PWD=", 4))
-			info->pwd = ft_strrchr(envp[i], '/') + 1;
-		else if (!ft_strncmp(envp[i], "PATH=", 5))
-			info->paths = ft_split(ft_strchr(envp[i], '/'), ':');
-	}
-	info->envp_len = i;
-	prompt = malloc(sizeof(char) * (ft_strlen(info->user) \
-			+ ft_strlen(info->pwd) + 16));
-	if (!prompt)
-		return ;
-	ft_strlcat(prompt, info->user, ft_strlen(info->user) + 1);
-	ft_strlcat(prompt, "@minishell ", ft_strlen(prompt) + 11 + 1);
-	ft_strlcat(prompt, info->pwd, ft_strlen(prompt) + ft_strlen(info->pwd) + 1);
-	ft_strlcat(prompt, " $> ", ft_strlen(prompt) + 5 + 1);
-	info->prompt = prompt;
-}
-
 static void	action(int sig)
 {
 	if (sig == SIGINT)
@@ -57,32 +29,68 @@ static void	action(int sig)
 	rl_redisplay();
 }
 
-static int	process_line(char *line, t_shell_info *info)
+static void	update_prompt(t_shell_info *info)
 {
-	char	**args;
-	int		status;
+	char	*pwd;
+	char	*user;
+	char	*prompt;
 
-	args = ft_split(line, ' ');
-	status = 1;
-	if (fork() == 0)
-	{
-		if (!ft_strncmp(args[0], "echo", ft_strlen(args[0])))
-			status = run_binary("echo", args, info);
-		exit(0);
-	}
-	if (!status)
-		printf("oops, something went wrong!\n");
-	wait(0);
-	return (1);
+	pwd = ft_strrchr(getenv("PWD"), '/') + 1;
+	user = getenv("USER");
+	prompt = malloc(sizeof(char) * (ft_strlen(user) + ft_strlen(pwd) + 15 + 1));
+	if (!prompt)
+		perror("malloc error");
+	ft_strlcpy(prompt, user, ft_strlen(user) + 1);
+	ft_strlcat(prompt, "@minishell ", ft_strlen(prompt) + 11 + 1);
+	ft_strlcat(prompt, pwd, ft_strlen(prompt) + ft_strlen(pwd) + 1);
+	ft_strlcat(prompt, " $> ", ft_strlen(prompt) + 4 + 1);
+	info->prompt = ft_strdup(prompt);
+	free(prompt);
 }
 
-static void	eof(void)
+static void	exec(char *line, t_shell_info *info)
 {
-	ft_putendl_fd("\nSaving session...", 1);
-	ft_putendl_fd("...copying shared history...", 1);
-	ft_putendl_fd("...saving history...truncating history files...", 1);
-	ft_putendl_fd("...completed.\n", 1);
-	ft_putendl_fd("[Process completed]", 1);
+	int		i;
+	char	*bin;
+	char	*tmp;
+	char	**argv;
+	char	**paths;
+
+	argv = ft_split(line, ' ');
+	paths = ft_split(getenv("PATH"), ':');
+	i = -1;
+	while (paths[++i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		bin = ft_strjoin(tmp, argv[0]);
+		free(tmp);
+		execve(bin, argv, info->envp);
+		free(bin);
+		free(paths[i]);
+	}
+	free(paths);
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv);
+}
+
+// possibly handle quotes etc before calling exec below
+static void	process_line(char *line, t_shell_info *info)
+{
+	int		status;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		perror("fork error");
+	else if (pid > 0)
+	{
+		if (waitpid(pid, &status, 0) == -1)
+			perror("waitpid error");
+		return ;
+	}
+	exec(line, info);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -91,21 +99,23 @@ int	main(int argc, char **argv, char **envp)
 	t_shell_info	info;
 
 	(void)argv;
-	(void)envp;
 	if (argc != 1)
 		return (1);
-	init_info(&info, envp);
-	signal(SIGINT, action);
-	signal(SIGQUIT, action);
+	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
+		perror("signal ");
+	info.envp = envp;
 	while (1)
 	{
+		update_prompt(&info);
 		line = readline(info.prompt);
+		free(info.prompt);
 		if (!line || (ft_strlen(line) == 4 && !ft_strncmp(line, "exit", 4)))
 			break ;
+		if (!*line)
+			continue ;
 		process_line(line, &info);
 		add_history(line);
 		free(line);
 	}
-	eof();
 	return (0);
 }
