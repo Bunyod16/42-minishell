@@ -1,5 +1,5 @@
 NAME = minishell
-SOURCES = main.c execute_binary.c
+SOURCES = main.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
