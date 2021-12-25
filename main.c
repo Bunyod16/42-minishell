@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/25 03:22:55 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2021/12/25 13:07:04 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/wait.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "minishell.h"
 #include "libft/libft.h"
 #include "libreadline/history.h"
 #include "libreadline/readline.h"
-#include "minishell.h"
-#include <sys/wait.h>
 
 static void	action(int sig)
 {
@@ -40,7 +40,7 @@ static void	eof(void)
 	ft_putendl_fd("[Process completed]", 1);
 }
 
-static void init_info(t_shell_info *info, char **envp)
+static void	init_info(t_shell_info *info, char **envp)
 {
 	int	i;
 
@@ -51,11 +51,11 @@ static void init_info(t_shell_info *info, char **envp)
 	info->paths = ft_split(ft_strchr(envp[i], '/'), ':');
 }
 
-static int 	process_line(char *line, t_shell_info *info)
+static int	process_line(char *line, t_shell_info *info)
 {
 	char	**args;
 	int		status;
-	
+
 	args = ft_split(line, ' ');
 	status = 1;
 	if (fork() == 0)
