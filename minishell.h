@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2021/12/25 13:08:55 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/25 14:08:43 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 
 typedef struct s_shell_info
 {
+	int		envp_len;
+	char	*pwd;
+	char	*user;
+	char	*prompt;
 	char	**envp;
 	char	**paths;
 }	t_shell_info;
