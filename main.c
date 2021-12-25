@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/25 18:45:20 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/25 20:58:05 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 		return (1);
 	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
-		perror("signal ");
+		perror("signal error");
 	info.envp = envp;
 	while (1)
 	{
@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 		free(info.prompt);
 		if (!line || (ft_strlen(line) == 4 && !ft_strncmp(line, "exit", 4)))
 			break ;
-		if (!*line)
+		if (!ft_strlen(line))
 			continue ;
 		process_line(line, &info);
 		add_history(line);
