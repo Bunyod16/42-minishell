@@ -3,7 +3,7 @@ SOURCES = main.c execute_binary.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -D READLINE_LIBRARY=1
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 

@@ -6,12 +6,14 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2021/12/25 13:01:14 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/25 13:08:55 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define READLINE_LIBRARY 1
 
 typedef struct s_shell_info
 {
