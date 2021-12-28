@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/25 18:45:20 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/28 19:28:17 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ static void	process_line(char *line, t_shell_info *info)
 {
 	int		status;
 	pid_t	pid;
+	t_token	*tokens;
+	// int		i;
 
 	pid = fork();
 	if (pid == -1)
@@ -90,7 +92,14 @@ static void	process_line(char *line, t_shell_info *info)
 			perror("waitpid error");
 		return ;
 	}
-	exec(line, info);
+	if (ft_strchr(line, '|') || ft_strchr(line, '>') || ft_strchr(line, '<'))
+	{
+		tokens = generate_tokens(line);
+		// printf("%s",tokens[0].str);
+		exit(1);
+	}
+	else
+		exec(line, info);
 }
 
 int	main(int argc, char **argv, char **envp)
