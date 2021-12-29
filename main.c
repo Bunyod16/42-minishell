@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/25 20:58:05 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/28 00:02:28 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (!ft_strlen(line))
 			continue ;
+		balance_quotes(&line);
 		process_line(line, &info);
 		add_history(line);
 		free(line);

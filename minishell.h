@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2021/12/25 14:08:43 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2021/12/28 00:02:55 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_shell_info
 	char	**paths;
 }	t_shell_info;
 
-/* execute_binary.c */
-int	run_binary(char *binary, char **args, t_shell_info *info);
+/* quotes.c */
+void	balance_quotes(char **line);
 
 #endif
