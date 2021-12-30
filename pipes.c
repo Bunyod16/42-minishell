@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:43:20 by bunyodshams       #+#    #+#             */
-/*   Updated: 2021/12/31 01:29:52 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2021/12/31 02:02:22 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ t_token	*process_cmd(t_token *tokens)
 t_token *generate_tokens(char *line)
 {
     t_token     *tokens = malloc(sizeof(t_token) * spec_char_num(line) + 1);
-    t_token     token;
     int         i;
     int         tok_num;
     int         last_cmd;
@@ -128,15 +127,15 @@ t_token *generate_tokens(char *line)
     {
         if (is_special_char(line, i) > 0 || line[i + 1] == 0)
         {
-            init_token(&token);
+			init_token(&tokens[tok_num]);
 			if (line[i + 1] == 0)
-				token.str = ft_substr(line, last_cmd, ft_strlen(line));
+				tokens[tok_num].str = ft_substr(line, last_cmd, i - ft_strlen(line));
 			else
 			{
-            	token.str = ft_substr(line, last_cmd, i - last_cmd);
-				token.cmd = ft_substr(line, i, is_special_char(line, i));
+            	tokens[tok_num].str = ft_substr(line, last_cmd, i - last_cmd);
+				tokens[tok_num].cmd = ft_substr(line, i, is_special_char(line, i));
 			}
-            tokens[tok_num] = token;
+			printf("|%s|\n",tokens[tok_num].str);
 			i += is_special_char(line, i);
             tok_num++;
             last_cmd = i;
