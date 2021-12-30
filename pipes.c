@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:43:20 by bunyodshams       #+#    #+#             */
-/*   Updated: 2021/12/28 19:27:16 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2021/12/31 01:29:52 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft/libft.h"
 #include <stdlib.h>
 
-int count_special_chars(char *line)
+int spec_char_num(char *line)
 {
     int i;
     int count;
@@ -42,9 +42,14 @@ int count_special_chars(char *line)
     return (count);
 }
 
-int is_special_char(char c)
+int is_special_char(char *str, int i)
 {
-    if (c == '|' || c == '>' || c == '<')
+	const char	c1 = str[i];
+	const char	c2 = str[i + 1];
+
+	if ((c1 == '>' && c2 == '>') || (c1 == '<' && c2 == '<'))
+		return (2);
+    if (c1 == '|' || c1 == '>' || c1 == '<')
         return (1);
     return (0);
 }
@@ -52,14 +57,18 @@ int is_special_char(char c)
 void    init_token(t_token *token)
 {
     token->input_fd = 0;
+	token->input_redir = 0;
+	token->input_eof = 0;
     token->output_fd = 0;
-	token->append_output = 0;
-	token->redir_input = 0;
-	token->redir_output = 0;
+	token->output_pipe = 0;
+	token->output_append = 0;
+	token->output_redir = 0;
+	token->cmd = 0;
     token->str = 0;
 }
 
-void    clean_line(char *line)
+/* removes spaces in the line */
+char	*clean_line(char *line)
 {
     int         i;
     const int   len = ft_strlen(line);
@@ -67,7 +76,7 @@ void    clean_line(char *line)
     i = -1;
     while (line[++i])
     {
-        if (is_special_char(line[i]))
+        if (is_special_char(line, i))
         {
             if (i != 0 && line[i - 1] == ' ')
 			{
@@ -78,12 +87,35 @@ void    clean_line(char *line)
                 ft_strlcpy(&line[i + 1], &line[i + 2], len);
         }
     }
+	return (line);
+}
+
+/* adds the .cmd string to the token */
+t_token	*process_cmd(t_token *tokens)
+{
+	int i;
+
+	i = -1;
+	printf("|%s|",tokens[0].str);
+	while (tokens[++i].str)
+	{
+		if (ft_strncmp(tokens[i].cmd, "|", 1))
+			tokens[i].output_pipe = 1;
+		else if (ft_strncmp(tokens[i].cmd, "<<", 2))
+			tokens[i].input_eof = 1;
+		else if (ft_strncmp(tokens[i].cmd, ">>", 2))
+			tokens[i].output_append = 1;
+		else if (ft_strncmp(tokens[i].cmd, ">", 1))
+			tokens[i].output_redir = 1;
+		else if (ft_strncmp(tokens[i].cmd, "<", 1))
+			tokens[i].input_redir = 1;		
+	}
+	return (tokens);
 }
 
 t_token *generate_tokens(char *line)
 {
-    const int   special_chars = count_special_chars(line);
-    t_token     *tokens = malloc(sizeof(t_token) * special_chars);
+    t_token     *tokens = malloc(sizeof(t_token) * spec_char_num(line) + 1);
     t_token     token;
     int         i;
     int         tok_num;
@@ -92,17 +124,20 @@ t_token *generate_tokens(char *line)
     last_cmd = 0;
     tok_num = 0;
     i = -1;
-    clean_line(line);
-    printf("%s\n",line);
     while (line[++i])
     {
-        if (is_special_char(line[i]) || line[i + 1] == 0)
+        if (is_special_char(line, i) > 0 || line[i + 1] == 0)
         {
             init_token(&token);
-            token.str = ft_substr(line, last_cmd, i - last_cmd);
-			i++;
-            printf("%s\n",token.str);
+			if (line[i + 1] == 0)
+				token.str = ft_substr(line, last_cmd, ft_strlen(line));
+			else
+			{
+            	token.str = ft_substr(line, last_cmd, i - last_cmd);
+				token.cmd = ft_substr(line, i, is_special_char(line, i));
+			}
             tokens[tok_num] = token;
+			i += is_special_char(line, i);
             tok_num++;
             last_cmd = i;
         }
