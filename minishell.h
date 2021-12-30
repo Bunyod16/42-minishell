@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2021/12/28 17:13:18 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2021/12/30 18:21:33 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ typedef struct s_shell_info
 
 typedef struct s_token
 {
-	int		output_fd;
 	int		input_fd;
-	int		wr_to_pipe;
-	int		redir_input;
-	int		redir_output;
-	int		append_output;
+	int		input_redir;
+	int		input_eof;
+	int		output_fd;
+	int		output_pipe;
+	int		output_append;
+	int		output_redir;
+	char	*cmd;
 	char	*str;
 }	t_token;
 
@@ -40,6 +42,7 @@ typedef struct s_token
 int     run_binary(char *binary, char **args, t_shell_info *info);
 
 /* pipes.c */
-t_token    *generate_tokens(char *line);
+t_token		*generate_tokens(char *line);
+char		*clean_line(char *line);
 
 #endif
