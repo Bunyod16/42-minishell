@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:43:20 by bunyodshams       #+#    #+#             */
-/*   Updated: 2021/12/31 02:02:22 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/01/01 01:49:25 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ t_token	*process_cmd(t_token *tokens)
 	int i;
 
 	i = -1;
-	printf("|%s|",tokens[0].str);
 	while (tokens[++i].str)
 	{
 		if (ft_strncmp(tokens[i].cmd, "|", 1))
@@ -113,9 +112,18 @@ t_token	*process_cmd(t_token *tokens)
 	return (tokens);
 }
 
+void    see_tokens(t_token *tokens, int tok_num) // here
+{
+    int i;
+
+    i = 0;
+    while (i < tok_num) // here
+        printf("%s\n",tokens[i++].str);
+}
+
 t_token *generate_tokens(char *line)
 {
-    t_token     *tokens = malloc(sizeof(t_token) * spec_char_num(line) + 1);
+    t_token     *tokens = malloc(sizeof(t_token *) * spec_char_num(line) + 1);
     int         i;
     int         tok_num;
     int         last_cmd;
@@ -135,11 +143,12 @@ t_token *generate_tokens(char *line)
             	tokens[tok_num].str = ft_substr(line, last_cmd, i - last_cmd);
 				tokens[tok_num].cmd = ft_substr(line, i, is_special_char(line, i));
 			}
-			printf("|%s|\n",tokens[tok_num].str);
 			i += is_special_char(line, i);
             tok_num++;
             last_cmd = i;
         }
     }
+    see_tokens(tokens, tok_num);
+	init_token(&tokens[tok_num]);
     return (tokens);
 }

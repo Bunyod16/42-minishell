@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/31 01:28:10 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/01/01 01:49:56 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void	process_line(char *line, t_shell_info *info)
 	int		status;
 	pid_t	pid;
 	t_token	*tokens;
-	int		i;
 
 	pid = fork();
 	if (pid == -1)
@@ -95,13 +94,7 @@ static void	process_line(char *line, t_shell_info *info)
 	if (ft_strchr(line, '|') || ft_strchr(line, '>') || ft_strchr(line, '<'))
 	{
 		tokens = generate_tokens(clean_line(line));
-		i = -1;
-		/* check to see the output */
-		while (tokens[++i].str)
-		{
-			printf("%s\n",tokens[i].str);
-			free(tokens[i].str);
-		}
+		free(tokens);
 		exit(1);
 	}
 	else
