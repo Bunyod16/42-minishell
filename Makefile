@@ -1,5 +1,5 @@
 NAME = minishell
-SOURCES = main.c quotes.c
+SOURCES = main.c quotes.c lexer.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
