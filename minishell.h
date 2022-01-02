@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/01/02 13:44:59 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:51:46 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ typedef struct s_shell_info
 
 /* quotes.c */
 void	balance_quotes(char **line);
+
+/* spacer.c */
+void	spacer(char **line);
 
 /* lexer.c */
 t_list	*lexer(char *line);
