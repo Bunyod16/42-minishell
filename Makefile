@@ -14,7 +14,7 @@ $(NAME): $(OBJECTS) libft
 	$(CC) -c $(CFLAGS) $?
 
 libft:
-	make -C libft
+	make -C libft bonus
 
 clean:
 	rm -f $(OBJECTS)

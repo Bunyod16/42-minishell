@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/01/01 16:32:14 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/02 13:44:59 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # define READLINE_LIBRARY 1
+
+# include "libft/libft.h"
 
 typedef struct s_shell_info
 {
@@ -29,6 +31,6 @@ typedef struct s_shell_info
 void	balance_quotes(char **line);
 
 /* lexer.c */
-char	**lexer(char *line);
+t_list	*lexer(char *line);
 
 #endif

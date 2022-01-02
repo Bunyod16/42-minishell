@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 00:09:39 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/01 16:33:08 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/02 13:48:06 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,14 @@ static int	toklen(char *line)
 	return (ret);
 }
 
-char	**lexer(char *line)
+static int	tokeniser(char ***tokens, char *line)
 {
 	int		i;
 	int		len;
 	char	quote;
-	char	**ret;
 
-	ret = malloc(sizeof(char *) * (toklen(line) + 1));
-	if (!ret)
+	*tokens = malloc(sizeof(char *) * (toklen(line) + 1));
+	if (!(*tokens))
 		return (0);
 	i = 0;
 	while (*line)
@@ -63,11 +62,25 @@ char	**lexer(char *line)
 			while (*line && *line != ' ' && ++len)
 				set_quote(&quote, *line++);
 			if (!quote)
-				ret[i++] = ft_substr(line - len, 0, len);
+				(*tokens)[i++] = ft_substr(line - len, 0, len);
 		}
 		else if (++line && quote)
 			++len;
 	}
-	ret[i] = 0;
+	(*tokens)[i] = 0;
+	return (i);
+}
+
+t_list	*lexer(char *line)
+{
+	int		len;
+	char	**tokens;
+	t_list	*ret;
+
+	len = tokeniser(&tokens, line);
+	ret = 0;
+	while (len--)
+		ft_lstadd_front(&ret, ft_lstnew(tokens[len]));
+	free(tokens);
 	return (ret);
 }

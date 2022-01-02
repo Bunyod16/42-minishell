@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/01 16:33:22 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/02 13:45:23 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static void	process_line(char *line, t_shell_info *info)
 int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
+	t_list			*token_list;
 	t_shell_info	info;
 
 	(void)argv;
@@ -115,7 +116,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		balance_quotes(&line);
 		add_history(line);
-		lexer(line);
+		token_list = lexer(line);
+		ft_lstclear(&token_list, free);
 		process_line(line, &info);
 		free(line);
 	}
