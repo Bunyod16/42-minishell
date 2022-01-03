@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 15:25:40 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:59:12 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ int	main(int argc, char **argv, char **envp)
 	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
 		perror("signal error");
 	info.env = init_env(envp);
-	info.envp = env_to_char(&info.env);
+	info.envp = set_envp(&info.env);
+	set_env(&info, "LOL=hehe");
+	printf("%s\n", get_env(&info.env, "LOL"));
+	unset_env(&info, "LOL");
+	printf("%s\n", get_env(&info.env, "LOL"));
 	while (1)
 	{
 		update_prompt(&info);

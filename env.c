@@ -6,43 +6,13 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:50:40 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 15:25:18 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:56:19 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "minishell.h"
-
-t_env_list	*env_new(char *str)
-{
-	char		*tmp;
-	t_env_list	*ret;
-
-	ret = malloc(sizeof(t_env_list));
-	if (!ret)
-		return (0);
-	tmp = ft_strchr(str, '=');
-	ret->key = ft_substr(str, 0, ft_strlen(str) - ft_strlen(tmp));
-	ret->value = ft_strdup(tmp + 1);
-	ret->full = ft_strdup(str);
-	ret->next = 0;
-	return (ret);
-}
-
-void	env_add_back(t_env_list **env, t_env_list *new)
-{
-	t_env_list	*tmp;
-
-	if (!*env)
-	{
-		*env = new;
-		return ;
-	}
-	tmp = *env;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-}
+#include "libft/libft.h"
 
 t_env_list	*init_env(char **envp)
 {
@@ -56,7 +26,7 @@ t_env_list	*init_env(char **envp)
 	return (env);
 }
 
-char	**env_to_char(t_env_list **env)
+char	**set_envp(t_env_list **env)
 {
 	int			i;
 	int			len;
@@ -79,4 +49,60 @@ char	**env_to_char(t_env_list **env)
 	}
 	ret[i] = 0;
 	return (ret);
+}
+
+char	*get_env(t_env_list **env, char *key)
+{
+	t_env_list	*tmp;
+
+	tmp = *env;
+	while (tmp)
+	{
+		if (ft_strlen(key) == ft_strlen(tmp->key) \
+				&& !ft_strncmp(key, tmp->key, ft_strlen(key)))
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return ("");
+}
+
+void	set_env(t_shell_info *info, char *str)
+{
+	int		i;
+	char	**tmp;
+
+	env_add_back(&info->env, env_new(str));
+	tmp = info->envp;
+	i = 0;
+	while (tmp[i])
+		free(tmp[i++]);
+	free(tmp);
+	info->envp = set_envp(&info->env);
+}
+
+void	unset_env(t_shell_info *info, char *key)
+{
+	int			i;
+	char		**tmp_envp;
+	t_env_list	*prev;
+	t_env_list	*tmp_env;
+
+	tmp_env = info->env;
+	while (tmp_env)
+	{
+		if (ft_strlen(key) == ft_strlen(tmp_env->key) \
+				&& !ft_strncmp(key, tmp_env->key, ft_strlen(key)))
+		{
+			env_del(tmp_env, free);
+			prev->next = tmp_env->next;
+		}
+		prev = tmp_env;
+		tmp_env = tmp_env->next;
+	}
+	tmp_envp = info->envp;
+	i = 0;
+	while (tmp_envp[i])
+		free(tmp_envp[i++]);
+	free(tmp_envp);
+	info->envp = set_envp(&info->env);
 }
