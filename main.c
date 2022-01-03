@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 18:05:05 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:42:41 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,22 @@ static void	action(int sig)
 
 static void	update_prompt(t_shell_info *info)
 {
+	char	*buf;
 	char	*pwd;
 	char	*user;
 	char	*prompt;
+	size_t	size;
 
-	pwd = ft_strrchr(getenv("PWD"), '/') + 1;
-	user = getenv("USER");
-	prompt = malloc(sizeof(char) * (ft_strlen(user) + ft_strlen(pwd) + 15 + 1));
-	if (!prompt)
-		perror("malloc error");
-	ft_strlcpy(prompt, user, ft_strlen(user) + 1);
-	ft_strlcat(prompt, "@minishell ", ft_strlen(prompt) + 11 + 1);
-	ft_strlcat(prompt, pwd, ft_strlen(prompt) + ft_strlen(pwd) + 1);
-	ft_strlcat(prompt, " $> ", ft_strlen(prompt) + 4 + 1);
-	info->prompt = ft_strdup(prompt);
-	free(prompt);
+	buf = 0;
+	size = 0;
+	pwd = getcwd(buf, size);
+	user = get_env(&info->env, "USER");
+	prompt = ft_strdup(user);
+	add_substr(&prompt, ft_strlen(prompt), "@minishell ");
+	add_substr(&prompt, ft_strlen(prompt), ft_strrchr(pwd, '/') + 1);
+	free(pwd);
+	add_substr(&prompt, ft_strlen(prompt), " $> ");
+	info->prompt = prompt;
 }
 
 static void	exec(char *line, t_shell_info *info)
@@ -106,10 +107,11 @@ int	main(int argc, char **argv, char **envp)
 		perror("signal error");
 	info.env = init_env(envp);
 	info.envp = set_envp(&info.env);
-	set_env(&info, "LOL=hehe");
-	printf("%s\n", get_env(&info.env, "LOL"));
-	unset_env(&info, "LOL");
-	printf("%s\n", get_env(&info.env, "LOL"));
+	printf("%s\n", get_env(&info.env, "USER"));
+	set_env(&info, "USER=hbaddrul");
+	printf("%s\n", get_env(&info.env, "USER"));
+	unset_env(&info, "USER");
+	printf("%s\n", get_env(&info.env, "USER"));
 	while (1)
 	{
 		update_prompt(&info);
