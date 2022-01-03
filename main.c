@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 17:59:12 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/03 18:05:05 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int	main(int argc, char **argv, char **envp)
 		quoter(&line);
 		add_history(line);
 		spacer(&line);
-		dequoter(&line);
 		token_list = lexer(line);
 		ft_lstclear(&token_list, free);
 		process_line(line, &info);
