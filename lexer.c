@@ -6,20 +6,13 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 00:09:39 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/02 13:48:06 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/03 11:40:29 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "minishell.h"
 #include "libft/libft.h"
-
-static void	set_quote(char *quote, char c)
-{
-	if (!*quote && (c == '\'' || c == '"'))
-		*quote = c;
-	else if (*quote == c)
-		*quote = 0;
-}
 
 static int	toklen(char *line)
 {

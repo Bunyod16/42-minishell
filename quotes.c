@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:02:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2021/12/29 13:24:12 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/03 11:55:19 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "libreadline/history.h"
 #include "libreadline/readline.h"
 
-static char	get_quote(char *line)
+static char	get_first_quote(char *line)
 {
 	char	ret;
 	char	*strs[2];
@@ -39,7 +39,7 @@ static char	get_quote(char *line)
 	return (ret);
 }
 
-static char	*read_quote_line(char **line)
+static char	*readline_quote(char **line)
 {
 	char	*ret;
 	char	*tmp;
@@ -47,7 +47,7 @@ static char	*read_quote_line(char **line)
 
 	tmp = ft_strjoin(*line, "\n");
 	free(*line);
-	line_2 = readline("dquote $> ");
+	line_2 = readline("quote $> ");
 	ret = ft_strjoin(tmp, line_2);
 	free(tmp);
 	free(line_2);
@@ -55,12 +55,20 @@ static char	*read_quote_line(char **line)
 	return (ret);
 }
 
-void	balance_quotes(char **line)
+void	set_quote(char *quote, char c)
+{
+	if (!*quote && (c == '\'' || c == '"'))
+		*quote = c;
+	else if (*quote == c)
+		*quote = 0;
+}
+
+void	quoter(char **line)
 {
 	char	*str;
 	char	quotes[2];
 
-	quotes[0] = get_quote(*line);
+	quotes[0] = get_first_quote(*line);
 	quotes[1] = quotes[0];
 	if (quotes[1])
 	{
@@ -70,16 +78,37 @@ void	balance_quotes(char **line)
 			str = ft_strchr(++str, quotes[1]);
 			if (!str)
 			{
-				str = read_quote_line(line);
+				str = readline_quote(line);
 				quotes[1] = quotes[0];
 			}
 			else
 			{
-				quotes[1] = get_quote(++str);
+				quotes[1] = get_first_quote(++str);
 				if (!quotes[1])
 					break ;
 			}
 			str = ft_strchr(str, quotes[1]);
+		}
+	}
+}
+
+void	dequoter(char **line)
+{
+	int		i;
+	int		should_get_quote;
+	char	quote;
+
+	should_get_quote = 0;
+	quote = 0;
+	i = -1;
+	while ((*line)[++i])
+	{
+		if (!should_get_quote)
+			quote = get_first_quote(&((*line)[i]));
+		if (quote && (*line)[i] == quote)
+		{
+			rm_substr(line, i--, 1);
+			should_get_quote ^= 1;
 		}
 	}
 }
