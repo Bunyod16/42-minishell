@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/01/03 18:30:38 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/05 00:29:45 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,19 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }	t_env_list;
 
+typedef struct s_cmd_list
+{
+	char				**cmds;
+	struct s_cmd_list	*next;
+}	t_cmd_list;
+
 typedef struct s_shell_info
 {
 	char		*prompt;
 	char		**envp;
 	char		**paths;
 	t_env_list	*env;
+	t_cmd_list	*cmd_lst;
 }	t_shell_info;
 
 /* env.c */
@@ -55,6 +62,12 @@ void		spacer(char **line);
 
 /* lexer.c */
 t_list		*lexer(char *line);
+
+/* checker.c a*/
+int			is_syntax_cmd(t_list *token_lst);
+
+/* parser.c */
+t_cmd_list	*parser(t_list *token_lst);
 
 /* str_utils.c */
 void		add_substr(char **str, int start, char *substr);
