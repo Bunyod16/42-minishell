@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/05 00:28:46 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/06 00:23:43 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	update_prompt(t_shell_info *info)
 	info->prompt = prompt;
 }
 
-static void	executor(t_shell_info *info)
+static void	executor(t_shell_info *info) // redirections etc
 {
 	int			status;
 	pid_t		pid;
@@ -92,15 +92,17 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (!ft_strlen(line))
 			continue ;
-		quoter(&line);
+		quoter(&line); // TODO: handle open pipes
+		if (!line)
+			continue ;
 		add_history(line);
 		spacer(&line);
-		token_lst = lexer(line);
+		token_lst = lexer(line); // TODO: expand environment variables
 		if (!is_syntax_cmd(token_lst))
 			continue ;
-		info.cmd_lst = parser(token_lst); // TODO
+		info.cmd_lst = parser(token_lst); // TODO: parse into t_cmd_list
 		ft_lstclear(&token_lst, free);
-		executor(&info);
+		executor(&info); // TODO: handle builtins
 		free(line);
 	}
 	ft_putendl_fd("exit", 1);
