@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/06 00:23:43 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:57:55 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	main(int argc, char **argv, char **envp)
 		token_lst = lexer(line); // TODO: expand environment variables
 		if (!is_syntax_cmd(token_lst))
 			continue ;
-		info.cmd_lst = parser(token_lst); // TODO: parse into t_cmd_list
+		info.cmd_lst = parser(token_lst, &info); // TODO: parse into t_cmd_list
 		ft_lstclear(&token_lst, free);
 		executor(&info); // TODO: handle builtins
 		free(line);
