@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 17:44:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/05 12:16:09 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/28 14:48:32 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	spacer_after(char **line)
 		{
 			if ((*line)[i + 1] != (*line)[i] && (*line)[i + 1] != ' ')
 				add_substr(line, ++i, " ");
-			else if ((*line)[i + 1] == (*line)[i] && (*line)[i - 1] == (*line)[i])
+			else if ((*line)[i + 1] == (*line)[i] \
+					&& (*line)[i - 1] == (*line)[i])
 				add_substr(line, ++i, " ");
 		}
 	}
