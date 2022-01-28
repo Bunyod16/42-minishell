@@ -19,11 +19,11 @@ libft:
 	make -C libft bonus
 
 clean:
-	rm -f $(OBJECTS)
+	$(RM) $(OBJECTS)
 	make -C libft clean
 
 fclean: clean
-	rm -f $(NAME) libft/libft.a
+	$(RM) $(NAME) libft/libft.a
 
 re: fclean all
 
