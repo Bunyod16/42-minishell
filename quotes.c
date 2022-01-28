@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:02:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 11:55:19 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/28 15:32:36 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,17 @@ static char	*readline_quote(char **line)
 	char	*tmp;
 	char	*line_2;
 
+	line_2 = readline("quote $> ");
+	if (!line_2)
+	{
+		ft_putendl_fd(\
+				"minishell: unexpected EOF while looking for matching `'", 2);
+		free(*line);
+		*line = 0;
+		return (0);
+	}
 	tmp = ft_strjoin(*line, "\n");
 	free(*line);
-	line_2 = readline("quote $> ");
 	ret = ft_strjoin(tmp, line_2);
 	free(tmp);
 	free(line_2);
@@ -82,11 +90,9 @@ void	quoter(char **line)
 				quotes[1] = quotes[0];
 			}
 			else
-			{
 				quotes[1] = get_first_quote(++str);
-				if (!quotes[1])
-					break ;
-			}
+			if (!str || !quotes[1])
+				break ;
 			str = ft_strchr(str, quotes[1]);
 		}
 	}

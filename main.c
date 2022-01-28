@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/06 00:23:43 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/19 00:33:48 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		quoter(&line); // TODO: handle open pipes
 		if (!line)
+		{
+			ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
 			continue ;
+		}
 		add_history(line);
 		spacer(&line);
 		token_lst = lexer(line); // TODO: expand environment variables
