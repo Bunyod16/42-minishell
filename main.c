@@ -6,10 +6,12 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/19 00:33:48 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 18:50:27 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/wait.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -93,6 +95,12 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_strlen(line))
 			continue ;
 		quoter(&line); // TODO: handle open pipes
+		if (!line)
+		{
+			ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
+			continue ;
+		}
+		piper(&line);
 		if (!line)
 		{
 			ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);

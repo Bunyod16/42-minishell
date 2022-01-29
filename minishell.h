@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/01/05 00:29:45 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 18:27:45 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void		env_del(t_env_list *env, void (*del)(void *));
 void		set_quote(char *quote, char c);
 void		quoter(char **line);
 void		dequoter(char **line);
+
+/* piper.c */
+void		piper(char **line);
 
 /* spacer.c */
 void		spacer(char **line);
