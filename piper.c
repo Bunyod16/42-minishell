@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:30:37 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/29 18:46:13 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 21:48:04 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	piper(char **line)
 {
 	char	*str;
 
+	if (!*line)
+		return ;
 	str = *line;
 	while (pipe_is_last(str))
 	{
