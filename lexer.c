@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 00:09:39 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 18:05:28 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 19:59:19 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static int	tokeniser(char ***tokens, char *line)
 	if (!(*tokens))
 		return (0);
 	i = 0;
+	quote = 0;
 	while (*line)
 	{
 		if (*line != ' ')

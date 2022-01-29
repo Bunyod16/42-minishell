@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/29 18:50:27 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 20:06:34 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static void	executor(t_shell_info *info) // redirections etc
 
 int	main(int argc, char **argv, char **envp)
 {
+	int				i;
 	char			*line;
 	t_list			*token_lst;
 	t_shell_info	info;
@@ -116,6 +117,12 @@ int	main(int argc, char **argv, char **envp)
 		executor(&info); // TODO: handle builtins
 		free(line);
 	}
+	env_clear(&info.env, free);
+	i = 0;
+	while (info.envp[i])
+		free(info.envp[i++]);
+	free(info.envp);
+	rl_clear_history();
 	ft_putendl_fd("exit", 1);
 	return (0);
 }

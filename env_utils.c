@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 15:38:53 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 17:53:07 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 20:04:44 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,14 @@ void	env_del(t_env_list *env, void (*del)(void *))
 	del(env->value);
 	del(env->full);
 	free(env);
+}
+
+void	env_clear(t_env_list **env, void (*del)(void *))
+{
+	if (env && *env)
+	{
+		env_clear(&(*env)->next, del);
+		env_del(*env, del);
+		*env = 0;
+	}
 }

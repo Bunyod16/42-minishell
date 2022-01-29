@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/01/29 18:27:45 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 19:31:02 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void		unset_env(t_shell_info *info, char *key);
 t_env_list	*env_new(char *str);
 void		env_add_back(t_env_list **env, t_env_list *new);
 void		env_del(t_env_list *env, void (*del)(void *));
+void		env_clear(t_env_list **env, void (*del)(void *));
 
 /* quotes.c */
 void		set_quote(char *quote, char c);
