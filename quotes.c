@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:02:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/30 21:13:13 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 23:33:51 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,6 @@ static char	*readline_quote(char **line)
 	return (ret);
 }
 
-void	set_quote(char *quote, char c)
-{
-	if (!*quote && (c == '\'' || c == '"'))
-		*quote = c;
-	else if (*quote == c)
-		*quote = 0;
-}
-
 void	quoter(char **line)
 {
 	char	*str;
@@ -119,4 +111,12 @@ void	dequoter(t_env_list **env, char **line)
 			should_get_quote ^= 1;
 		}
 	}
+}
+
+void	set_quote(char *quote, char c)
+{
+	if (!*quote && (c == '\'' || c == '"'))
+		*quote = c;
+	else if (*quote == c)
+		*quote = 0;
 }

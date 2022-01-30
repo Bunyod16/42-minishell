@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/30 18:04:43 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 21:35:04 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
 		perror("signal error");
 	info.env = init_env(envp);
-	info.envp = set_envp(&info.env);
+	info.envp = set_envp(info.env);
 	while (1)
 	{
 		update_prompt(&info);
@@ -112,12 +112,12 @@ int	main(int argc, char **argv, char **envp)
 		executor(&info); // TODO: handle builtins
 		free(line);
 	}
+	rl_clear_history();
 	env_clear(&info.env, free);
 	i = 0;
 	while (info.envp[i])
 		free(info.envp[i++]);
 	free(info.envp);
-	rl_clear_history();
 	ft_putendl_fd("exit", 1);
 	return (0);
 }

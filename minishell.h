@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/01/30 17:26:43 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 23:34:02 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@ typedef struct s_shell_info
 }	t_shell_info;
 
 /* env.c */
-t_env_list	*init_env(char **envp);
-char		**set_envp(t_env_list **env);
-char		*get_env(t_env_list **env, char *key);
 void		set_env(t_shell_info *info, char *str);
 void		unset_env(t_shell_info *info, char *key);
+char		*get_env(t_env_list **env, char *key);
+char		**set_envp(t_env_list *env);
+t_env_list	*init_env(char **envp);
 
 /* env_utils.c */
-t_env_list	*env_new(char *str);
-void		env_add_back(t_env_list **env, t_env_list *new);
 void		env_del(t_env_list *env, void (*del)(void *));
 void		env_clear(t_env_list **env, void (*del)(void *));
+void		env_add_back(t_env_list **env, t_env_list *new);
+t_env_list	*env_new(char *str);
 
 /* quotes.c */
-void		set_quote(char *quote, char c);
 void		quoter(char **line);
 void		dequoter(t_env_list **env, char **line);
+void		set_quote(char *quote, char c);
 
 /* piper.c */
 void		piper(char **line);
