@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:02:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/28 15:32:36 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:37:35 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	quoter(char **line)
 	}
 }
 
-void	dequoter(char **line)
+void	dequoter(t_env_list **env, char **line)
 {
 	int		i;
 	int		should_get_quote;
@@ -111,6 +111,8 @@ void	dequoter(char **line)
 	{
 		if (!should_get_quote)
 			quote = get_first_quote(&((*line)[i]));
+		if (quote != '\'' && (*line)[i] == '$')
+			expander(env, line, &i);
 		if (quote && (*line)[i] == quote)
 		{
 			rm_substr(line, i--, 1);

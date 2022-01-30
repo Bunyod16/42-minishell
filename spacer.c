@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 17:44:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/28 14:48:32 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:50:46 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	spacer_before(char **line)
 	while ((*line)[++i])
 	{
 		set_quote(&quote, (*line)[i]);
-		if (!quote && i > 0 && is_metachar((*line)[i]) \
+		if (!quote && i > 0 && (is_metachar((*line)[i]) || (*line)[i] == '$') \
 				&& (*line)[i - 1] != (*line)[i] && (*line)[i - 1] != ' ')
 			add_substr(line, i++, " ");
 	}

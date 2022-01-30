@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/29 21:49:50 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 18:04:43 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_history(line);
 		spacer(&line);
-		token_lst = lexer(line); // TODO: expand environment variables
+		token_lst = lexer(&info.env, line);
 		if (!is_syntax_cmd(token_lst))
 			continue ;
 		info.cmd_lst = parser(token_lst); // TODO: parse into t_cmd_list

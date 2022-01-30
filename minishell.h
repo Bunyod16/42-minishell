@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/01/29 19:31:02 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 17:26:43 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		env_clear(t_env_list **env, void (*del)(void *));
 /* quotes.c */
 void		set_quote(char *quote, char c);
 void		quoter(char **line);
-void		dequoter(char **line);
+void		dequoter(t_env_list **env, char **line);
 
 /* piper.c */
 void		piper(char **line);
@@ -64,8 +64,11 @@ void		piper(char **line);
 /* spacer.c */
 void		spacer(char **line);
 
+/* expander.c */
+void		expander(t_env_list **env, char **line, int *i);
+
 /* lexer.c */
-t_list		*lexer(char *line);
+t_list		*lexer(t_env_list **env, char *line);
 
 /* checker.c a*/
 int			is_syntax_cmd(t_list *token_lst);

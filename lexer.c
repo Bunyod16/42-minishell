@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 00:09:39 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/29 19:59:19 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 18:04:30 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	tokeniser(char ***tokens, char *line)
 	return (i);
 }
 
-t_list	*lexer(char *line)
+t_list	*lexer(t_env_list **env, char *line)
 {
 	int		len;
 	char	**tokens;
@@ -75,7 +75,7 @@ t_list	*lexer(char *line)
 	ret = 0;
 	while (len--)
 	{
-		dequoter(&tokens[len]);
+		dequoter(env, &tokens[len]);
 		ft_lstadd_front(&ret, ft_lstnew(tokens[len]));
 	}
 	free(tokens);
