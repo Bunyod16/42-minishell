@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
+/*   Updated: 2022/02/02 04:49:40 by bunyodshams      ###   ########.fr       */
 /*   Updated: 2022/01/30 23:34:02 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -31,13 +32,22 @@ typedef struct s_cmd_list
 	struct s_cmd_list	*next;
 }	t_cmd_list;
 
+typedef struct s_simple_command
+{
+	int		argc;
+	char	**argv;
+}	t_simple_command;
+
 typedef struct s_shell_info
 {
-	char		*prompt;
-	char		**envp;
-	char		**paths;
-	t_env_list	*env;
-	t_cmd_list	*cmd_lst;
+	char				*prompt;
+	char				**envp;
+	char				**paths;
+	char				*infile;
+	char				*outfile;
+	int					cmd_num;
+	t_env_list			*env;
+	t_simple_command 	*simple_commands;
 }	t_shell_info;
 
 /* env.c */
@@ -74,10 +84,15 @@ t_list		*lexer(t_env_list **env, char *line);
 int			is_syntax_cmd(t_list *token_lst);
 
 /* parser.c */
-t_cmd_list	*parser(t_list *token_lst);
+void		parser(t_list *token_lst, t_shell_info *info);
 
 /* str_utils.c */
 void		add_substr(char **str, int start, char *substr);
 void		rm_substr(char **str, int start, int len);
 
+/* execute_binary.c */
+int			run_binary(int cmd_num, t_shell_info *info);
+
+/* execute.c */
+void		executor(t_shell_info *info);
 #endif

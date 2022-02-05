@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
+/*   Updated: 2022/02/04 04:04:10 by bunyodshams      ###   ########.fr       */
 /*   Updated: 2022/01/30 21:35:04 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -19,6 +20,7 @@
 #include "libft/libft.h"
 #include "libreadline/history.h"
 #include "libreadline/readline.h"
+#include <fcntl.h>
 
 static void	action(int sig)
 {
@@ -47,29 +49,8 @@ static void	update_prompt(t_shell_info *info)
 	free(pwd);
 	add_substr(&prompt, ft_strlen(prompt), " $> ");
 	info->prompt = prompt;
-}
-
-static void	executor(t_shell_info *info) // redirections etc
-{
-	int			status;
-	pid_t		pid;
-	t_cmd_list	*cmd_lst;
-
-	cmd_lst = info->cmd_lst;
-	while (cmd_lst)
-	{
-		pid = fork();
-		if (pid == -1)
-			perror("fork error");
-		else if (!pid)
-		{
-			execve(cmd_lst->cmds[0], cmd_lst->cmds, info->envp);
-			perror("execve error");
-		}
-		cmd_lst = cmd_lst->next;
-	}
-	if (waitpid(pid, &status, 0) == -1)
-		perror("waitpid error");
+	info->infile = 0;
+	info->outfile = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -107,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		token_lst = lexer(&info.env, line);
 		if (!is_syntax_cmd(token_lst))
 			continue ;
-		info.cmd_lst = parser(token_lst); // TODO: parse into t_cmd_list
+		parser(token_lst, &info); // TODO: parse into t_cmd_list
 		ft_lstclear(&token_lst, free);
 		executor(&info); // TODO: handle builtins
 		free(line);
