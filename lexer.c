@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 00:09:39 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 18:05:28 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 18:04:30 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static int	tokeniser(char ***tokens, char *line)
 	if (!(*tokens))
 		return (0);
 	i = 0;
+	quote = 0;
 	while (*line)
 	{
 		if (*line != ' ')
@@ -64,7 +65,7 @@ static int	tokeniser(char ***tokens, char *line)
 	return (i);
 }
 
-t_list	*lexer(char *line)
+t_list	*lexer(t_env_list **env, char *line)
 {
 	int		len;
 	char	**tokens;
@@ -74,7 +75,7 @@ t_list	*lexer(char *line)
 	ret = 0;
 	while (len--)
 	{
-		dequoter(&tokens[len]);
+		dequoter(env, &tokens[len]);
 		ft_lstadd_front(&ret, ft_lstnew(tokens[len]));
 	}
 	free(tokens);

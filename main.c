@@ -7,9 +7,12 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
 /*   Updated: 2022/02/04 04:04:10 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/01/30 21:35:04 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/wait.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -52,6 +55,7 @@ static void	update_prompt(t_shell_info *info)
 
 int	main(int argc, char **argv, char **envp)
 {
+	int				i;
 	char			*line;
 	t_list			*token_lst;
 	t_shell_info	info;
@@ -62,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
 		perror("signal error");
 	info.env = init_env(envp);
-	info.envp = set_envp(&info.env);
+	info.envp = set_envp(info.env);
 	while (1)
 	{
 		update_prompt(&info);
@@ -72,12 +76,16 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (!ft_strlen(line))
 			continue ;
-		quoter(&line); // TODO: handle open pipes
+		quoter(&line);
+		piper(&line);
 		if (!line)
+		{
+			ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
 			continue ;
+		}
 		add_history(line);
 		spacer(&line);
-		token_lst = lexer(line); // TODO: expand environment variables
+		token_lst = lexer(&info.env, line);
 		if (!is_syntax_cmd(token_lst))
 			continue ;
 		parser(token_lst, &info); // TODO: parse into t_cmd_list
@@ -85,6 +93,12 @@ int	main(int argc, char **argv, char **envp)
 		executor(&info); // TODO: handle builtins
 		free(line);
 	}
+	rl_clear_history();
+	env_clear(&info.env, free);
+	i = 0;
+	while (info.envp[i])
+		free(info.envp[i++]);
+	free(info.envp);
 	ft_putendl_fd("exit", 1);
 	return (0);
 }

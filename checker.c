@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 23:56:45 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/05 13:50:24 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/29 19:56:17 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static int	is_valid_operator(char *next_token)
 {
 	char	*tmp;
 
-	tmp = ft_strdup("minishell: syntax error near unexpected token `'");
 	if (!next_token || is_metachar(next_token[0]))
 	{
+		tmp = ft_strdup("minishell: syntax error near unexpected token `'");
 		if (!next_token)
 			add_substr(&tmp, ft_strlen(tmp) - 1, "newline");
 		else if (is_metachar(next_token[0]))

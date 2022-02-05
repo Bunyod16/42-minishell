@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 15:38:53 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/03 17:53:07 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/01/30 21:56:04 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 #include "minishell.h"
 #include "libft/libft.h"
 
-t_env_list	*env_new(char *str)
+void	env_del(t_env_list *env, void (*del)(void *))
 {
-	char		*tmp;
-	t_env_list	*ret;
+	del(env->key);
+	del(env->value);
+	del(env->full);
+	free(env);
+}
 
-	ret = malloc(sizeof(t_env_list));
-	if (!ret)
-		return (0);
-	tmp = ft_strchr(str, '=');
-	ret->key = ft_substr(str, 0, ft_strlen(str) - ft_strlen(tmp));
-	ret->value = ft_strdup(tmp + 1);
-	ret->full = ft_strdup(str);
-	ret->next = 0;
-	return (ret);
+void	env_clear(t_env_list **env, void (*del)(void *))
+{
+	if (env && *env)
+	{
+		env_clear(&(*env)->next, del);
+		env_del(*env, del);
+		*env = 0;
+	}
 }
 
 void	env_add_back(t_env_list **env, t_env_list *new)
@@ -45,10 +47,18 @@ void	env_add_back(t_env_list **env, t_env_list *new)
 	tmp->next = new;
 }
 
-void	env_del(t_env_list *env, void (*del)(void *))
+t_env_list	*env_new(char *str)
 {
-	del(env->key);
-	del(env->value);
-	del(env->full);
-	free(env);
+	char		*tmp;
+	t_env_list	*ret;
+
+	ret = malloc(sizeof(t_env_list));
+	if (!ret)
+		return (0);
+	tmp = ft_strchr(str, '=');
+	ret->key = ft_substr(str, 0, ft_strlen(str) - ft_strlen(tmp));
+	ret->value = ft_strdup(tmp + 1);
+	ret->full = ft_strdup(str);
+	ret->next = 0;
+	return (ret);
 }
