@@ -1,6 +1,6 @@
 NAME = minishell
 SOURCES = \
-	main.c env.c env_utils.c quotes.c spacer.c lexer.c checker.c parser.c \
+	main.c env.c env_utils.c quotes.c spacer.c lexer.c checker.c parser.c execute_binary.c execute.c\
 	str_utils.c
 OBJECTS = $(SOURCES:.c=.o)
 

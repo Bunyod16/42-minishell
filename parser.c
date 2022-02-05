@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 00:55:22 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/19 18:16:09 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/05 19:06:19 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,50 +67,49 @@ void		view_cmds(t_shell_info *info)
 	int j;
 
 	i = 0;
-	while (info->simple_commands[i])
+	while (info->cmd_num >= i)
 	{
 		j = 0;
-		while (info->simple_commands[i]->argv[j])
+		while (info->simple_commands[i].argv[j])
 		{
-			printf("%s\n",info->simple_commands[i]->argv[j]);
+			printf("%s\n",info->simple_commands[i].argv[j]);
 			j++;
 		}
 		i++;
 	}
 }
 
-void		find_pipes(t_list *token_lst, t_shell_info *info)
+t_simple_command	*find_pipes(t_list *token_lst, t_shell_info *info)
 {
-	t_list			*temp;
-	int				i;
-	int				j;
+	t_simple_command	*pipes;
+	t_list				*temp;
+	int					i;
+	int					j;
 
 	temp = token_lst;
 	if (ft_strncmp(temp->content, "<", 1) == 0)
 		temp = temp->next->next;
-	info->simple_commands = malloc(sizeof(t_simple_command) * (lst_count_str("|", token_lst) + 2));
+	pipes = malloc(sizeof(t_simple_command) * (lst_count_str("|", token_lst) + 2));
 	j = 0;
 	i = 0;
-	info->simple_commands[i]->argv = malloc(sizeof(char **)*(count_cmd(temp) + 1));
-	while (temp)
+	pipes[0].argv = malloc(sizeof(char *) * (count_cmd(temp) + 1));
+	while (temp && ft_strncmp(temp->content, ">", 1) != 0)
 	{
-		if (ft_strncmp(temp->content, "|", ft_strlen(temp->content)) == 0
-			|| ft_strncmp(temp->content, ">", 1) == 0)
+		if (ft_strncmp(temp->content, "|", ft_strlen(temp->content)) == 0)
 		{
-			info->simple_commands[i]->argv[j] =	0;
 			i++;
-			info->simple_commands[i]->argv = malloc(sizeof(char **)*(count_cmd(temp->next) + 1));
+			pipes[i].argv = malloc(sizeof(char *) * (count_cmd(temp->next) + 1));
 			j = 0;
+			temp = temp->next;
 		}
-		else
-		{
-			info->simple_commands[i]->argv[j] =	ft_strdup(temp->content);
-			info->simple_commands[i]->argc = ++j;
-		}
+		pipes[i].argv[j] = ft_strdup(temp->content);
+		pipes[i].argc = ++j;
+		pipes[i].argv[j] = 0;
 		temp = temp->next;
 	}
-	info->simple_commands[i]->argv[j] =	0;
-	info->simple_commands[i + 1] = 0;
+	
+	info->cmd_num = i;
+	return (pipes);
 }
 
 void		find_out_file(t_list *token_lst, t_shell_info *info)
@@ -160,7 +159,7 @@ void		find_in_file(t_list *token_lst, t_shell_info *info)
 	}
 }
 
-t_cmd_list	*parser(t_list *token_lst, t_shell_info *info)
+void	parser(t_list *token_lst, t_shell_info *info)
 {
 	int			len;
 	t_list		*tmp;
@@ -171,12 +170,6 @@ t_cmd_list	*parser(t_list *token_lst, t_shell_info *info)
 	tmp = token_lst;
 	find_out_file(token_lst, info);
 	find_in_file(token_lst, info);
-	find_pipes(token_lst, info);
+	info->simple_commands = find_pipes(token_lst, info);
 	view_cmds(info);
-	while (tmp && ++len)
-	{
-		// printf("%s\n",(char *)tmp->content);
-		tmp = tmp->next;
-	}
-	return (ret);
 }
