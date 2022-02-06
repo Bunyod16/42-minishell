@@ -6,10 +6,10 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/02/02 04:49:40 by bunyodshams      ###   ########.fr       */
-/*   Updated: 2022/01/30 23:34:02 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/02/06 13:35:41 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -46,6 +46,7 @@ typedef struct s_shell_info
 	char				*infile;
 	char				*outfile;
 	int					cmd_num;
+	int					append;
 	t_env_list			*env;
 	t_simple_command 	*simple_commands;
 }	t_shell_info;

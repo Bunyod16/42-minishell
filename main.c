@@ -6,10 +6,10 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/02/04 04:04:10 by bunyodshams      ###   ########.fr       */
-/*   Updated: 2022/01/30 21:35:04 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/02/06 13:55:06 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <sys/wait.h>
 #include <signal.h>
