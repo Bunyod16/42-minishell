@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 19:39:38 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/02/06 13:57:41 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/06 19:48:03 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	executor(t_shell_info *info)
         if (i == info->cmd_num)
         {
             if (info->outfile)
-                fdout = open(info->outfile, O_CREAT | O_RDWR);
+                fdout = open(info->outfile, O_RDWR | O_CREAT, S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP);
             else
                 fdout = dup(tmpout);
         }
