@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 00:36:13 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/02/04 04:13:34 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/06 13:15:17 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,11 @@ static char	**create_paths(char *cmd,char **envp)
 int	run_binary(int cmd_num, t_shell_info *info)
 {
 	int			i;
-	char		**args;
 	char		*cmd;
-	pid_t		pid;
 
-	printf("ran\n");
 	cmd = info->simple_commands[cmd_num].argv[0];
-	args = malloc(sizeof(char **) * (info->simple_commands[cmd_num].argc));
-	i = 1;
-	while (info->simple_commands[cmd_num].argv[i])
-	{
-		args[i - 1] = ft_strdup(info->simple_commands[cmd_num].argv[i]);
-		i++;
-	}
-	args[i - 1] = 0;
-	i = -1;
 	info->paths = create_paths(info->simple_commands[cmd_num].argv[0], info->envp);
-	pid = fork();
+	i = -1;
 	while (info->paths[++i])
 	{
 		execve(info->paths[i], info->simple_commands[cmd_num].argv, info->envp);

@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 00:55:22 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/02/05 19:06:19 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/06 12:41:53 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,6 @@ int			count_cmd(t_list *token_lst)
 		temp = temp->next;
 	}
 	return (count);
-}
-
-void		view_cmds(t_shell_info *info)
-{
-	int	i;
-	int j;
-
-	i = 0;
-	while (info->cmd_num >= i)
-	{
-		j = 0;
-		while (info->simple_commands[i].argv[j])
-		{
-			printf("%s\n",info->simple_commands[i].argv[j]);
-			j++;
-		}
-		i++;
-	}
 }
 
 t_simple_command	*find_pipes(t_list *token_lst, t_shell_info *info)
@@ -171,5 +153,4 @@ void	parser(t_list *token_lst, t_shell_info *info)
 	find_out_file(token_lst, info);
 	find_in_file(token_lst, info);
 	info->simple_commands = find_pipes(token_lst, info);
-	view_cmds(info);
 }

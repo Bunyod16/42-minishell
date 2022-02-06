@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 19:39:38 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/02/05 19:31:41 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/06 13:26:12 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	executor(t_shell_info *info)
     int tmpin;
     int tmpout;
     int fdpipe[2];
+    int tmpret;
     int fdin;
-	int tmpret;
     int fdout;
-    pid_t ret;
+    pid_t pid;
     int i;
 
     tmpin = dup(0);
@@ -33,6 +33,7 @@ void	executor(t_shell_info *info)
         fdin = open(info->infile, O_RDONLY);
     else
         fdin = dup(tmpin);
+
     i = -1;
     while (info->cmd_num >= ++i)
     {
@@ -41,7 +42,12 @@ void	executor(t_shell_info *info)
         if (i == info->cmd_num)
         {
             if (info->outfile)
-                fdout = open(info->outfile, O_WRONLY);
+            {
+                printf("%s\n",info->outfile);
+                fdout = open(info->outfile, O_RDWR);
+            }
+            else
+                fdout = dup(tmpout);
         }
         else
         {
@@ -50,14 +56,16 @@ void	executor(t_shell_info *info)
             fdin = fdpipe[0];
         }
         dup2(fdout, 1);
-        ret = fork(); 
-        if(ret == 0)
+        close(fdout);
+
+        pid = fork();
+        if(pid == 0)
         	run_binary(i, info);
     }
     dup2(tmpin,0);
     dup2(tmpout,1);
     close(tmpin);
     close(tmpout);
-    waitpid(ret, &tmpret, 0);
+    waitpid(pid, &tmpret, 0);
     // execute
 }
