@@ -6,16 +6,16 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:02:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/30 23:33:51 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/02/10 22:48:22 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include "minishell.h"
 #include "libft/libft.h"
-#include "libreadline/history.h"
-#include "libreadline/readline.h"
 
 static char	get_first_quote(char *line)
 {

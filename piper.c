@@ -6,16 +6,16 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 14:30:37 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/29 21:48:04 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/02/10 22:48:10 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include "minishell.h"
 #include "libft/libft.h"
-#include "libreadline/history.h"
-#include "libreadline/readline.h"
 
 static int	pipe_is_last(char *line)
 {
