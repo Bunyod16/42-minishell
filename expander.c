@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 23:49:30 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/30 18:02:11 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/02/10 22:53:19 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	expander(t_env_list **env, char **line, int *i)
 	key = get_key(&(*line)[*i + 1]);
 	value = get_env(env, key);
 	len = ft_strlen(key);
-	rm_substr(line, *i, ft_strlen(key) + 1);
+	rm_substr(line, *i, len + 1);
 	free(key);
 	add_substr(line, *i, value);
 	*i += ft_strlen(value) - 1;

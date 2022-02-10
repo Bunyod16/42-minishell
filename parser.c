@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 00:55:22 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/02/06 13:55:11 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/10 22:57:09 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ void		find_in_file(t_list *token_lst, t_shell_info *info)
 
 void	parser(t_list *token_lst, t_shell_info *info)
 {
-	int			len;
-	t_list		*tmp;
-	t_cmd_list	*ret;
+	// int			len;
+	// t_list		*tmp;
+	// t_cmd_list	*ret;
 
-	len = 0;
-	ret = 0;
-	tmp = token_lst;
+	// len = 0;
+	// ret = 0;
+	// tmp = token_lst;
 	find_out_file(token_lst, info);
 	find_in_file(token_lst, info);
 	info->simple_commands = find_pipes(token_lst, info);
