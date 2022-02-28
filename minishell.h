@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/02/06 13:35:41 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/28 20:57:02 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define READLINE_LIBRARY 1
 
 # include "libft/libft.h"
+#include <sys/types.h>
 
 typedef struct s_env_list
 {
@@ -50,6 +51,18 @@ typedef struct s_shell_info
 	t_env_list			*env;
 	t_simple_command 	*simple_commands;
 }	t_shell_info;
+
+typedef struct s_exec
+{
+	int		tmpin;
+	int		tmpout;
+	int		fdpipe[2];
+	int		tmpret;
+	int		fdin;
+	int		fdout;
+	pid_t	pid;
+
+} t_exec;
 
 /* env.c */
 void		set_env(t_shell_info *info, char *str);
@@ -96,4 +109,8 @@ int			run_binary(int cmd_num, t_shell_info *info);
 
 /* execute.c */
 void		executor(t_shell_info *info);
+
+/*parser_utils.c*/
+int	lst_cnt(char *str, t_list *token_lst);
+int	count_cmd(t_list *token_lst);
 #endif

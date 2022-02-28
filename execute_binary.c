@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 00:36:13 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/02/06 13:15:17 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/08 22:01:22 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,14 @@
 #include "minishell.h"
 #include <stdio.h>
 
-
-static char	**create_paths(char *cmd,char **envp)
+static char	**create_paths(char *cmd, char **envp)
 {
 	int		i;
 	char	**paths;
 	char	**full_paths;
 
 	i = 0;
-	while(envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
@@ -39,17 +38,17 @@ static char	**create_paths(char *cmd,char **envp)
 	return (full_paths);
 }
 
-int	run_binary(int cmd_num, t_shell_info *info)
+int	run_binary(int num, t_shell_info *info)
 {
 	int			i;
 	char		*cmd;
 
-	cmd = info->simple_commands[cmd_num].argv[0];
-	info->paths = create_paths(info->simple_commands[cmd_num].argv[0], info->envp);
+	cmd = info->simple_commands[num].argv[0];
+	info->paths = create_paths(info->simple_commands[num].argv[0], info->envp);
 	i = -1;
 	while (info->paths[++i])
 	{
-		execve(info->paths[i], info->simple_commands[cmd_num].argv, info->envp);
+		execve(info->paths[i], info->simple_commands[num].argv, info->envp);
 	}
 	return (0);
 }
