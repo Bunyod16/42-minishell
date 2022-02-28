@@ -1,7 +1,7 @@
 NAME = minishell
 SOURCES = \
 	main.c env.c env_utils.c quotes.c piper.c spacer.c expander.c lexer.c \
-	checker.c parser.c str_utils.c execute_binary.c execute.c
+	checker.c parser.c parser_utils.c str_utils.c execute_binary.c execute.c
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
