@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/02/06 13:55:06 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/02/10 22:48:32 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 #include "minishell.h"
 #include "libft/libft.h"
-#include "libreadline/history.h"
-#include "libreadline/readline.h"
 #include <fcntl.h>
 
 static void	action(int sig)
