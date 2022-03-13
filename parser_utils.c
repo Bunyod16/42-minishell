@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:07:44 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/03/01 00:09:09 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/06 03:24:31 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	count_cmd(t_list *token_lst)
 	temp = token_lst;
 	while (temp)
 	{
+		if (ft_strncmp(temp->content, "<<", ft_strlen(temp->content) == 0))
+			count -= 2;
 		if (ft_strncmp(temp->content, "|", ft_strlen(temp->content)) == 0
 			|| ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0
 			|| ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0)

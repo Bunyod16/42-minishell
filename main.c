@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/02/10 22:48:32 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/03/06 03:03:41 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	update_prompt(t_shell_info *info)
 	info->prompt = prompt;
 	info->infile = 0;
 	info->outfile = 0;
+	info->here_doc = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

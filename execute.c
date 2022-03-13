@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/02/08 22:12:59 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/14 02:53:26 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	save_fd_set_input(t_shell_info *info, t_exec *exec)
 	exec->tmpout = dup(1);
 	if (info->infile)
 		fdin = open(info->infile, O_RDONLY);
+	else if (info->here_doc != 0)
+		fdin = write_to_heredoc(info);
 	else
 		fdin = dup(exec->tmpin);
 	return (fdin);
