@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 00:36:13 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/02/10 22:57:21 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/03/12 17:22:34 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	**create_paths(char *cmd, char **envp)
 int	run_binary(int num, t_shell_info *info)
 {
 	int			i;
-	// char		*cmd;
+	char		*cmd;
 
 	cmd = info->simple_commands[num].argv[0];
 	info->paths = create_paths(info->simple_commands[num].argv[0], info->envp);

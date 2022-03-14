@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/02/28 20:57:02 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/12 02:36:40 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_shell_info
 	char				*outfile;
 	int					cmd_num;
 	int					append;
+	char			  *here_doc;
 	t_env_list			*env;
 	t_simple_command 	*simple_commands;
 }	t_shell_info;
@@ -113,4 +114,7 @@ void		executor(t_shell_info *info);
 /*parser_utils.c*/
 int	lst_cnt(char *str, t_list *token_lst);
 int	count_cmd(t_list *token_lst);
+
+/* here_doc.c*/
+int write_to_heredoc(t_shell_info *info);
 #endif
