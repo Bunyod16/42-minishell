@@ -35,13 +35,17 @@ int	count_cmd(t_list *token_lst)
 
 	count = 0;
 	temp = token_lst;
-	while (temp)
+	while (temp && temp->content)
 	{
-		if (ft_strncmp(temp->content, "<<", ft_strlen(temp->content) == 0))
+		if (ft_strlen(temp->content) == 2
+			&& ft_strncmp(temp->content, "<<", ft_strlen(temp->content)) == 0)
 			count -= 2;
-		if (ft_strncmp(temp->content, "|", ft_strlen(temp->content)) == 0
-			|| ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0
-			|| ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0)
+		if (ft_strlen(temp->content) == 1
+			&& (ft_strncmp(temp->content, "|", ft_strlen(temp->content)) == 0
+			|| ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0))
+			return (count);
+		if (ft_strlen(temp->content) == 2
+			&& ft_strncmp(temp->content, ">>", 2) == 0)
 			return (count);
 		count++;
 		temp = temp->next;

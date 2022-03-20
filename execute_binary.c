@@ -42,9 +42,7 @@ static char	**create_paths(char *cmd, char **envp)
 int	run_binary(int num, t_shell_info *info)
 {
 	int			i;
-	char		*cmd;
-
-	cmd = info->simple_commands[num].argv[0];
+	
 	info->paths = create_paths(info->simple_commands[num].argv[0], info->envp);
 	i = -1;
 	while (info->paths[++i])

@@ -48,14 +48,10 @@ t_simple_command	*find_pipes(t_list **token_lst, t_shell_info *info)
 {
 	t_simple_command	*pipes;
 	t_list				*temp;
-	int					i;
-	int					j;
 
 	temp = *token_lst;
 	if (ft_strncmp(temp->content, "<", 1) == 0)
 		temp = temp->next->next;
-	j = 0;
-	i = 0;
 	pipes = malloc(sizeof(t_simple_command) * (lst_cnt("|", temp) + 2));
 	pipes[0].argv = malloc(sizeof(char *) * (count_cmd(temp) + 1));
 	pipes = pipe_cut(temp, pipes, info);
