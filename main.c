@@ -6,10 +6,9 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/03/06 03:03:41 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/20 02:15:49 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <sys/wait.h>
 #include <signal.h>
@@ -89,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		token_lst = lexer(&info.env, line);
 		if (!is_syntax_cmd(token_lst))
 			continue ;
-		parser(token_lst, &info); // TODO: parse into t_cmd_list
+		parser(&token_lst, &info); // TODO: parse into t_cmd_list
 		ft_lstclear(&token_lst, free);
 		executor(&info); // TODO: handle builtins
 		free(line);

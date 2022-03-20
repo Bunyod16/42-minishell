@@ -6,11 +6,12 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:07:44 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/03/06 03:24:31 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/20 11:36:25 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 int	lst_cnt(char *str, t_list *token_lst)
 {
@@ -46,4 +47,43 @@ int	count_cmd(t_list *token_lst)
 		temp = temp->next;
 	}
 	return (count);
+}
+
+int	token_count(t_list *token_lst)
+{
+	int	i;
+
+	i = 0;
+	while (token_lst)
+	{
+		token_lst = token_lst->next;
+		i++;
+	}
+	return (i);
+}
+
+t_simple_command	*pipe_cut(t_list *t, t_simple_command *p, t_shell_info *in)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (t && ft_strncmp(t->content, ">", 1) != 0)
+	{
+		if (ft_strncmp(t->content, "|", ft_strlen(t->content)) == 0)
+		{
+			i++;
+			p[i].argv = malloc(sizeof(char *)
+					* (count_cmd(t->next) + 1));
+			j = 0;
+			t = t->next;
+		}
+		p[i].argv[j] = ft_strdup(t->content);
+		p[i].argc = ++j;
+		p[i].argv[j] = 0;
+		t = t->next;
+	}
+	in->cmd_num = i;
+	return (p);
 }

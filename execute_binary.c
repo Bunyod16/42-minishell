@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 00:36:13 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/03/12 17:22:34 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/17 01:58:13 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ static char	**create_paths(char *cmd, char **envp)
 	i = 0;
 	while (paths[i])
 		i++;
-	full_paths = malloc(sizeof(char *) * (i + 1));
+	full_paths = malloc(sizeof(char *) * (i + 2));
 	cmd = ft_strjoin("/", cmd);
 	i = -1;
 	while (paths[++i])
 		full_paths[i] = ft_strjoin(paths[i], cmd);
-	full_paths[i] = 0;
+	full_paths[i] = cmd;
+	full_paths[i + 1] = 0;
 	return (full_paths);
 }
 

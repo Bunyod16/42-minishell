@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/03/12 02:36:40 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/20 11:36:37 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_list		*lexer(t_env_list **env, char *line);
 int			is_syntax_cmd(t_list *token_lst);
 
 /* parser.c */
-void		parser(t_list *token_lst, t_shell_info *info);
+void		parser(t_list **token_lst, t_shell_info *info);
 
 /* str_utils.c */
 void		add_substr(char **str, int start, char *substr);
@@ -114,6 +114,8 @@ void		executor(t_shell_info *info);
 /*parser_utils.c*/
 int	lst_cnt(char *str, t_list *token_lst);
 int	count_cmd(t_list *token_lst);
+int token_count(t_list *token_lst);
+t_simple_command *pipe_cut(t_list *temp, t_simple_command *pipes, t_shell_info *info);
 
 /* here_doc.c*/
 int write_to_heredoc(t_shell_info *info);
