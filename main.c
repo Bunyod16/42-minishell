@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/03/20 02:15:49 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/03/28 02:13:56 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,27 @@ static void	update_prompt(t_shell_info *info)
 	info->infile = 0;
 	info->outfile = 0;
 	info->here_doc = 0;
+}
+
+void	free_mem(t_shell_info *info)
+{
+	int		i;
+	int		j;
+
+	if (info->outfile)
+		free(info->outfile);
+	if (info->infile)
+		free(info->infile);
+	if (info->here_doc)
+		free(info->here_doc);
+	i = 0;
+	while (info->simple_commands[i].argv)
+	{
+		j = 0;
+		while(info->simple_commands[i].argv && info->simple_commands[i].argv[j])
+			free(info->simple_commands[i].argv[j++]);
+		i++;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -99,6 +120,7 @@ int	main(int argc, char **argv, char **envp)
 	while (info.envp[i])
 		free(info.envp[i++]);
 	free(info.envp);
+	free_mem(&info);
 	ft_putendl_fd("exit", 1);
 	return (0);
 }
