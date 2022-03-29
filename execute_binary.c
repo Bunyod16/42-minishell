@@ -16,7 +16,7 @@
 #include "minishell.h"
 #include <stdio.h>
 
-static char	**create_paths(char *cmd, char **envp)
+char	**create_paths(char *cmd, char **envp)
 {
 	int		i;
 	char	**paths;
@@ -49,5 +49,5 @@ int	run_binary(int num, t_shell_info *info)
 	{
 		execve(info->paths[i], info->simple_commands[num].argv, info->envp);
 	}
-	return (0);
+	exit (0);
 }

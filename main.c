@@ -53,27 +53,6 @@ static void	update_prompt(t_shell_info *info)
 	info->here_doc = 0;
 }
 
-void	free_mem(t_shell_info *info)
-{
-	int		i;
-	int		j;
-
-	if (info->outfile)
-		free(info->outfile);
-	if (info->infile)
-		free(info->infile);
-	if (info->here_doc)
-		free(info->here_doc);
-	i = 0;
-	while (info->simple_commands[i].argv)
-	{
-		j = 0;
-		while(info->simple_commands[i].argv && info->simple_commands[i].argv[j])
-			free(info->simple_commands[i].argv[j++]);
-		i++;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	int				i;
@@ -113,6 +92,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_lstclear(&token_lst, free);
 		executor(&info); // TODO: handle builtins
 		free(line);
+		free_mem(&info);
 	}
 	rl_clear_history();
 	env_clear(&info.env, free);
@@ -120,7 +100,6 @@ int	main(int argc, char **argv, char **envp)
 	while (info.envp[i])
 		free(info.envp[i++]);
 	free(info.envp);
-	free_mem(&info);
 	ft_putendl_fd("exit", 1);
 	return (0);
 }

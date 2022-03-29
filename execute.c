@@ -58,6 +58,29 @@ int	save_fd_set_input(t_shell_info *info, t_exec *exec)
 	return (fdin);
 }
 
+int		check_paths(t_shell_info *info)
+{
+	char **paths;
+	int i;
+	int num;
+	int ret;
+
+	num = 0;
+	i = -1;
+	ret = 0;
+	while (++i <= info->cmd_num)
+	{
+		paths = create_paths(info->simple_commands[num].argv[0], info->envp);
+		while (paths[++i])
+		{
+			if (checkIfFileExists(paths[i]))
+				ret = 1;
+		}
+		free_pp(paths);
+	}
+	return (ret);
+}
+
 void	executor(t_shell_info *info)
 {
 	int			i;
@@ -65,7 +88,7 @@ void	executor(t_shell_info *info)
 
 	exec.fdin = save_fd_set_input(info, &exec);
 	i = -1;
-	while (info->cmd_num >= ++i)
+	while (info->cmd_num >= ++i && check_paths(info))
 	{
 		dup2(exec.fdin, 0);
 		close(exec.fdin);

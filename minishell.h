@@ -107,6 +107,7 @@ void		rm_substr(char **str, int start, int len);
 
 /* execute_binary.c */
 int			run_binary(int cmd_num, t_shell_info *info);
+char		**create_paths(char *cmd, char **envp);
 
 /* execute.c */
 void		executor(t_shell_info *info);
@@ -119,4 +120,10 @@ t_simple_command *pipe_cut(t_list *temp, t_simple_command *pipes, t_shell_info *
 
 /* here_doc.c*/
 int write_to_heredoc(t_shell_info *info);
+
+/* memory_utils.c*/
+void	free_mem(t_shell_info *info);
+int		checkIfFileExists(const char* filename);
+void	free_pp(char **str);
+
 #endif
