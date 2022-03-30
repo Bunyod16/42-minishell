@@ -111,6 +111,7 @@ char		**create_paths(char *cmd, char **envp);
 
 /* execute.c */
 void		executor(t_shell_info *info);
+int			check_paths(t_shell_info *info);
 
 /*parser_utils.c*/
 int	lst_cnt(char *str, t_list *token_lst);

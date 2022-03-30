@@ -90,7 +90,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		parser(&token_lst, &info); // TODO: parse into t_cmd_list
 		ft_lstclear(&token_lst, free);
-		executor(&info); // TODO: handle builtins
+		if (check_paths(&info))
+			executor(&info); // TODO: handle builtins
 		free(line);
 		free_mem(&info);
 	}

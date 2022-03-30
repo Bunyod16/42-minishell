@@ -88,7 +88,7 @@ void	executor(t_shell_info *info)
 
 	exec.fdin = save_fd_set_input(info, &exec);
 	i = -1;
-	while (info->cmd_num >= ++i && check_paths(info))
+	while (info->cmd_num >= ++i)
 	{
 		dup2(exec.fdin, 0);
 		close(exec.fdin);

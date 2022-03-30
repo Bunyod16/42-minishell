@@ -34,6 +34,7 @@ char	**create_paths(char *cmd, char **envp)
 	i = -1;
 	while (paths[++i])
 		full_paths[i] = ft_strjoin(paths[i], cmd);
+	free_pp(paths);
 	full_paths[i] = cmd;
 	full_paths[i + 1] = 0;
 	return (full_paths);
