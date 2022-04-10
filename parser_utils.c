@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:07:44 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/03/20 11:36:25 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/04/10 15:58:06 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	count_cmd(t_list *token_lst)
 			&& ft_strncmp(temp->content, "<<", ft_strlen(temp->content)) == 0)
 			count -= 2;
 		if (ft_strlen(temp->content) == 1
-			&& (ft_strncmp(temp->content, "|", ft_strlen(temp->content)) == 0
+			&& (ft_strncmp(temp->content, "|", ft_strlen(temp->content)) == 0 \
 			|| ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0))
 			return (count);
 		if (ft_strlen(temp->content) == 2

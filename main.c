@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/03/28 02:13:56 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/04/10 15:59:25 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	free_mem(t_shell_info *info)
 	while (info->simple_commands[i].argv)
 	{
 		j = 0;
-		while(info->simple_commands[i].argv && info->simple_commands[i].argv[j])
+		while (info->simple_commands[i].argv \
+			&& info->simple_commands[i].argv[j])
 			free(info->simple_commands[i].argv[j++]);
 		i++;
 	}
