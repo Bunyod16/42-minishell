@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/04/10 15:59:25 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/04/10 19:05:53 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		spacer(&line);
 		token_lst = lexer(&info.env, line);
-		if (!is_syntax_cmd(token_lst))
+		if (!is_syntax_cmd(token_lst)) // TODO: errno stuff here
 			continue ;
-		parser(&token_lst, &info); // TODO: parse into t_cmd_list
+		parser(&token_lst, &info);
 		ft_lstclear(&token_lst, free);
 		executor(&info); // TODO: handle builtins
 		free(line);

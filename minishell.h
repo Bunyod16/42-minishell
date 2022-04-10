@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/04/10 16:01:42 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/04/10 23:51:56 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,24 @@ int					run_binary(int cmd_num, t_shell_info *info);
 /* execute.c */
 void				executor(t_shell_info *info);
 
-/*parser_utils.c*/
+/*parser_utils.c */
 int					lst_cnt(char *str, t_list *token_lst);
 int					count_cmd(t_list *token_lst);
 int					token_count(t_list *token_lst);
 t_simple_command	*pipe_cut(t_list *temp, t_simple_command *pipes, \
 						t_shell_info *info);
 
-/* here_doc.c*/
+/* here_doc.c */
 int					write_to_heredoc(t_shell_info *info);
+
+/* builtins.c */
+void				echo(int i, t_shell_info *info);
+void				cd(int i, t_shell_info *info);
+void				pwd(void);
+void				export(int i, t_shell_info *info);
+void				unset(int i, t_shell_info *info);
+
+/* builtins_2.c */
+void				env(int i, t_shell_info *info);
+
 #endif

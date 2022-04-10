@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/03/14 02:53:26 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/04/10 23:52:27 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,32 @@ int	save_fd_set_input(t_shell_info *info, t_exec *exec)
 	return (fdin);
 }
 
+static void	run_cmd(int i, t_shell_info *info)
+{
+	const char	*cmd = info->simple_commands[i].argv[0];
+
+	if (ft_strlen(cmd) == ft_strlen("echo") \
+		&& !ft_strncmp(cmd, "echo", ft_strlen("echo")))
+		echo(i, info);
+	else if (ft_strlen(cmd) == ft_strlen("cd") \
+		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
+		cd(i, info);
+	else if (ft_strlen(cmd) == ft_strlen("pwd") \
+		&& !ft_strncmp(cmd, "pwd", ft_strlen("pwd")))
+		pwd();
+	else if (ft_strlen(cmd) == ft_strlen("export") \
+		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
+		export(i, info);
+	else if (ft_strlen(cmd) == ft_strlen("unset") \
+		&& !ft_strncmp(cmd, "unset", ft_strlen("unset")))
+		unset(i, info);
+	else if (ft_strlen(cmd) == ft_strlen("env") \
+		&& !ft_strncmp(cmd, "env", ft_strlen("env")))
+		env(i, info);
+	else
+		run_binary(i, info);
+}
+
 void	executor(t_shell_info *info)
 {
 	int			i;
@@ -81,7 +107,7 @@ void	executor(t_shell_info *info)
 		close(exec.fdout);
 		exec.pid = fork();
 		if (exec.pid == 0)
-			run_binary(i, info);
+			run_cmd(i, info);
 	}
 	restore_fd(&exec);
 }
