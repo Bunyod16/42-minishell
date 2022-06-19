@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:07:44 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/04/10 15:58:06 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/19 16:42:39 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int	lst_cnt(char *str, t_list *token_lst)
 {
@@ -75,17 +76,20 @@ t_simple_command	*pipe_cut(t_list *t, t_simple_command *p, t_shell_info *in)
 	j = 0;
 	while (t && ft_strncmp(t->content, ">", 1) != 0)
 	{
-		if (ft_strncmp(t->content, "|", ft_strlen(t->content)) == 0)
+		if (ft_strlen(t->content) != 0
+			&& ft_strncmp(t->content, "|", ft_strlen(t->content)) == 0)
 		{
 			i++;
-			p[i].argv = malloc(sizeof(char *)
-					* (count_cmd(t->next) + 1));
+			p[i].argv = malloc(sizeof(char *) * (count_cmd(t->next) + 1));
 			j = 0;
 			t = t->next;
 		}
-		p[i].argv[j] = ft_strdup(t->content);
-		p[i].argc = ++j;
-		p[i].argv[j] = 0;
+		if (ft_strlen(t->content) != 0)
+		{
+			p[i].argv[j] = ft_strdup(t->content);
+			p[i].argc = ++j;
+			p[i].argv[j] = 0;
+		}
 		t = t->next;
 	}
 	in->cmd_num = i;

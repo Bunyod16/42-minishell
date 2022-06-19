@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/04/10 19:05:53 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/19 22:30:19 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	update_prompt(t_shell_info *info)
 	info->infile = 0;
 	info->outfile = 0;
 	info->here_doc = 0;
+	info->simple_commands = NULL;
 }
 
 void	free_mem(t_shell_info *info)
@@ -65,7 +66,7 @@ void	free_mem(t_shell_info *info)
 	if (info->here_doc)
 		free(info->here_doc);
 	i = 0;
-	while (info->simple_commands[i].argv)
+	while (info->simple_commands && info->simple_commands[i].argv)
 	{
 		j = 0;
 		while (info->simple_commands[i].argv \

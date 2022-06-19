@@ -6,12 +6,12 @@ SOURCES = \
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I/usr/local/opt/readline/include
+CFLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS) libft
-	$(CC) -o $@ $(OBJECTS) -Llibft -lft -L/usr/local/opt/readline/lib -lreadline
+	$(CC) -o $@ $(OBJECTS) -Llibft -lft -L/opt/homebrew/opt/readline/lib -lreadline
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $?

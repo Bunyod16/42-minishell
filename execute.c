@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/04/10 23:52:27 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/19 14:06:56 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 int	get_out_file(int tmpout, t_shell_info *info)
 {
@@ -82,6 +83,7 @@ static void	run_cmd(int i, t_shell_info *info)
 		env(i, info);
 	else
 		run_binary(i, info);
+	exit(0);
 }
 
 void	executor(t_shell_info *info)
