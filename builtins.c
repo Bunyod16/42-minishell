@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 21:32:07 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/04/11 00:07:15 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:47:21 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	pwd(void)
 
 void	export(int i, t_shell_info *info)
 {
-	(void)i;
-	(void)info;
+	char	*tmp;
+
+	tmp = info->simple_commands[i].argv[1];
+	set_env(info, tmp);
 }
 
 void	unset(int i, t_shell_info *info)
