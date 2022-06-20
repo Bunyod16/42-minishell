@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 21:32:07 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/20 16:47:21 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:20:27 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ void	echo(int i, t_shell_info *info)
 	}
 	if (should_nl)
 		ft_putchar_fd('\n', 1);
-}
-
-void	cd(int i, t_shell_info *info)
-{
-	(void)i;
-	(void)info;
 }
 
 void	pwd(void)
