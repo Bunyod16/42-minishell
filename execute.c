@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/06/19 14:06:56 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/21 00:09:22 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	restore_fd(t_exec *exec)
 	waitpid(exec->pid, &exec->tmpret, 0);
 }
 
-int	save_fd_set_input(t_shell_info *info, t_exec *exec)
+void	save_fd_set_input(t_shell_info *info, t_exec *exec)
 {
 	int	fdin;
 
@@ -56,7 +56,8 @@ int	save_fd_set_input(t_shell_info *info, t_exec *exec)
 		fdin = write_to_heredoc(info);
 	else
 		fdin = dup(exec->tmpin);
-	return (fdin);
+	exec->fdin = fdin;
+	exec->pid = 111;
 }
 
 static void	run_cmd(int i, t_shell_info *info)
@@ -66,18 +67,9 @@ static void	run_cmd(int i, t_shell_info *info)
 	if (ft_strlen(cmd) == ft_strlen("echo") \
 		&& !ft_strncmp(cmd, "echo", ft_strlen("echo")))
 		echo(i, info);
-	else if (ft_strlen(cmd) == ft_strlen("cd") \
-		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
-		cd(i, info);
 	else if (ft_strlen(cmd) == ft_strlen("pwd") \
 		&& !ft_strncmp(cmd, "pwd", ft_strlen("pwd")))
 		pwd();
-	else if (ft_strlen(cmd) == ft_strlen("export") \
-		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
-		export(i, info);
-	else if (ft_strlen(cmd) == ft_strlen("unset") \
-		&& !ft_strncmp(cmd, "unset", ft_strlen("unset")))
-		unset(i, info);
 	else if (ft_strlen(cmd) == ft_strlen("env") \
 		&& !ft_strncmp(cmd, "env", ft_strlen("env")))
 		env(i, info);
@@ -86,12 +78,39 @@ static void	run_cmd(int i, t_shell_info *info)
 	exit(0);
 }
 
+int	is_no_fork_builtin(int i, t_shell_info *info)
+{
+	char	*cmd;
+
+	i = 0;
+	cmd = info->simple_commands[i].argv[0];
+	if (ft_strlen(cmd) == ft_strlen("cd") \
+		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
+	{
+		cd(i, info);
+		return (1);
+	}
+	else if (ft_strlen(cmd) == ft_strlen("export") \
+		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
+	{
+		export(i, info);
+		return (1);
+	}
+	else if (ft_strlen(cmd) == ft_strlen("unset") \
+		&& !ft_strncmp(cmd, "unset", ft_strlen("unset")))
+	{
+		unset(i, info);
+		return (1);
+	}
+	return (0);
+}
+
 void	executor(t_shell_info *info)
 {
 	int			i;
 	t_exec		exec;
 
-	exec.fdin = save_fd_set_input(info, &exec);
+	save_fd_set_input(info, &exec);
 	i = -1;
 	while (info->cmd_num >= ++i)
 	{
@@ -107,7 +126,8 @@ void	executor(t_shell_info *info)
 		}
 		dup2(exec.fdout, 1);
 		close(exec.fdout);
-		exec.pid = fork();
+		if (is_no_fork_builtin(i, info) == 0)
+			exec.pid = fork();
 		if (exec.pid == 0)
 			run_cmd(i, info);
 	}
