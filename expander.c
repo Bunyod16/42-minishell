@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 23:49:30 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/19 16:15:35 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/21 00:57:18 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "minishell.h"
 #include "libft/libft.h"
+
+extern int	g_errno;
 
 static char	*get_key(char *str)
 {
@@ -40,4 +42,14 @@ void	expander(t_env_list **env, char **line, int *i)
 	free(key);
 	add_substr(line, *i, value);
 	*i += ft_strlen(value) - 1;
+}
+
+void	errno_helper(char **line, int *i)
+{
+	char	*errno;
+
+	rm_substr(line, *i, 2);
+	errno = ft_itoa(g_errno);
+	add_substr(line, *i, errno);
+	*i += ft_strlen(errno) - 1;
 }

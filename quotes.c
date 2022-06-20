@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:02:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/02/10 22:48:22 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/21 00:57:58 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ void	dequoter(t_env_list **env, char **line)
 	{
 		if (!should_get_quote)
 			quote = get_first_quote(&((*line)[i]));
-		if (quote != '\'' && (*line)[i] == '$' && ft_isalpha((*line)[i + 1]))
+		if (quote != '\'' && (*line)[i] == '$' && (*line)[i + 1] == '?')
+			errno_helper(line, &i);
+		else if (quote != '\'' \
+			&& (*line)[i] == '$' && ft_isalpha((*line)[i + 1]))
 			expander(env, line, &i);
 		if (quote && (*line)[i] == quote)
 		{
