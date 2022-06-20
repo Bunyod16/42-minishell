@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/19 22:30:19 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/21 01:03:53 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,47 +54,20 @@ static void	update_prompt(t_shell_info *info)
 	info->simple_commands = NULL;
 }
 
-void	free_mem(t_shell_info *info)
+void	sub_main(t_shell_info *info, char *line, t_list *token_lst)
 {
-	int		i;
-	int		j;
-
-	if (info->outfile)
-		free(info->outfile);
-	if (info->infile)
-		free(info->infile);
-	if (info->here_doc)
-		free(info->here_doc);
-	i = 0;
-	while (info->simple_commands && info->simple_commands[i].argv)
-	{
-		j = 0;
-		while (info->simple_commands[i].argv \
-			&& info->simple_commands[i].argv[j])
-			free(info->simple_commands[i].argv[j++]);
-		i++;
-	}
+	add_history(line);
+	spacer(&line);
+	token_lst = lexer(&info->env, line);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	main_loop(t_shell_info	*info, char *line, t_list *token_lst)
 {
-	int				i;
-	char			*line;
-	t_list			*token_lst;
-	t_shell_info	info;
-
-	(void)argv;
-	if (argc != 1)
-		return (1);
-	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
-		perror("signal error");
-	info.env = init_env(envp);
-	info.envp = set_envp(info.env);
 	while (1)
 	{
-		update_prompt(&info);
-		line = readline(info.prompt);
-		free(info.prompt);
+		update_prompt(info);
+		line = readline(info->prompt);
+		free(info->prompt);
 		if (!line || (ft_strlen(line) == 4 && !ft_strncmp(line, "exit", 4)))
 			break ;
 		if (!ft_strlen(line))
@@ -106,16 +79,33 @@ int	main(int argc, char **argv, char **envp)
 			ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
 			continue ;
 		}
-		add_history(line);
-		spacer(&line);
-		token_lst = lexer(&info.env, line);
-		if (!is_syntax_cmd(token_lst)) // TODO: errno stuff here
+		sub_main(info, line, token_lst);
+		if (!is_syntax_cmd(token_lst))
 			continue ;
-		parser(&token_lst, &info);
+		parser(&token_lst, info);
 		ft_lstclear(&token_lst, free);
-		executor(&info); // TODO: handle builtins
+		executor(info);
 		free(line);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	int				i;
+	char			*line;
+	t_list			*token_lst;
+	t_shell_info	info;
+
+	line = NULL;
+	token_lst = NULL;
+	(void)argv;
+	if (argc != 1)
+		return (1);
+	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
+		perror("signal error");
+	info.env = init_env(envp);
+	info.envp = set_envp(info.env);
+	main_loop(&info, line, token_lst);
 	rl_clear_history();
 	env_clear(&info.env, free);
 	i = 0;
