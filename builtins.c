@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 21:32:07 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/21 00:41:11 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/21 00:43:44 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	export(int i, t_shell_info *info)
 
 void	unset(int i, t_shell_info *info)
 {
-	(void)i;
-	(void)info;
+	char	*key;
+
+	key = info->simple_commands[i].argv[1];
+	unset_env(info, key);
 }
