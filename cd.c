@@ -13,35 +13,22 @@ int		find_len(char **arr)
 	return (i);
 }
 
-int		find_index(char **arr, char *needle)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		if (ft_strncmp(arr[i], needle, ft_strlen(needle)))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 void	change_dir(t_shell_info *info, char *path)
 {
-	char *cwd;
-	int		i;
+	char	*cwd;
+	char	*temp;
 
 	if (path == NULL)
 		return ;
 	cwd = getcwd(NULL, 0);
 	if (chdir(path) != 0)
-		printf("cd: No such file or directory: %s", path);
+		printf("cd: No such file or directory: %s\n", path);
 	else
 	{
-		i = find_index(info->envp, "OLDPWD");
-		free(info->envp[i]);
-		info->envp[i] = path;
+		unset_env(info, "OLDPWD");;
+		temp = ft_strjoin("OLDPWD=", cwd);
+		set_env(info,temp);
+		free(temp);
 	}
 }
 
