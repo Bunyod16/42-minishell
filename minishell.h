@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/04/10 23:51:56 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/21 01:14:51 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,11 @@ void				export(int i, t_shell_info *info);
 void				unset(int i, t_shell_info *info);
 
 /* builtins_2.c */
-void				env(int i, t_shell_info *info);
+void				env( t_shell_info *info);
 
+/* mem_utils.c */
+void				free_mem(t_shell_info *info);
+
+/*execute_utils.c */
+int					get_out_file(int tmpout, t_shell_info *info);
 #endif

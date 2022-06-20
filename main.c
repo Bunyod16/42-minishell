@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/21 01:03:53 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/21 01:23:38 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,28 @@ void	main_loop(t_shell_info	*info, char *line, t_list *token_lst)
 		ft_lstclear(&token_lst, free);
 		executor(info);
 		free(line);
+	}
+}
+
+void	free_mem(t_shell_info *info)
+{
+	int		i;
+	int		j;
+
+	if (info->outfile)
+		free(info->outfile);
+	if (info->infile)
+		free(info->infile);
+	if (info->here_doc)
+		free(info->here_doc);
+	i = 0;
+	while (info->simple_commands && info->simple_commands[i].argv)
+	{
+		j = 0;
+		while (info->simple_commands[i].argv \
+			&& info->simple_commands[i].argv[j])
+			free(info->simple_commands[i].argv[j++]);
+		i++;
 	}
 }
 

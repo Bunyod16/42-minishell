@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/06/21 00:09:22 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/21 01:14:07 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdlib.h>
-
-int	get_out_file(int tmpout, t_shell_info *info)
-{
-	int	fdout;
-
-	if (info->outfile)
-	{
-		if (info->append > 0)
-			fdout = open(info->outfile, O_APPEND | O_CREAT | O_RDWR,
-					S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP);
-		else
-			fdout = open(info->outfile, O_RDWR | O_CREAT,
-					S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP);
-	}
-	else
-		fdout = dup(tmpout);
-	return (fdout);
-}
 
 void	restore_fd(t_exec *exec)
 {
@@ -72,7 +54,7 @@ static void	run_cmd(int i, t_shell_info *info)
 		pwd();
 	else if (ft_strlen(cmd) == ft_strlen("env") \
 		&& !ft_strncmp(cmd, "env", ft_strlen("env")))
-		env(i, info);
+		env(info);
 	else
 		run_binary(i, info);
 	exit(0);

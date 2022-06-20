@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_2.c                                       :+:      :+:    :+:   */
+/*   mem_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/10 22:01:47 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/21 01:13:21 by bunyodshams      ###   ########.fr       */
+/*   Created: 2022/06/21 01:10:49 by bunyodshams       #+#    #+#             */
+/*   Updated: 2022/06/21 01:15:29 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
+#include <stdlib.h>
 
-void	env(t_shell_info *info)
+void	free_mem(t_shell_info *info)
 {
-	int	i;
+	int		i;
+	int		j;
 
+	if (info->outfile)
+		free(info->outfile);
+	if (info->infile)
+		free(info->infile);
+	if (info->here_doc)
+		free(info->here_doc);
 	i = 0;
-	while (info->envp[i])
+	while (info->simple_commands && info->simple_commands[i].argv)
 	{
-		printf("%s\n", info->envp[i++]);
+		j = 0;
+		while (info->simple_commands[i].argv \
+			&& info->simple_commands[i].argv[j])
+			free(info->simple_commands[i].argv[j++]);
+		i++;
 	}
 }
