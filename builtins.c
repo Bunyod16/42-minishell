@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 21:32:07 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/20 19:20:27 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/21 00:41:11 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,30 @@ void	pwd(void)
 void	export(int i, t_shell_info *info)
 {
 	char	*tmp;
+	char	*tmp_2;
+	char	*tmp_3;
 
-	tmp = info->simple_commands[i].argv[1];
-	set_env(info, tmp);
+	if (info->simple_commands[i].argv[1] == 0)
+	{
+		i = -1;
+		while (info->envp[++i])
+		{
+			tmp = info->envp[i];
+			tmp_2 = ft_strchr(tmp, '=');
+			tmp_3 = ft_substr(tmp, 0, ft_strlen(tmp) - ft_strlen(tmp_2));
+			ft_putstr_fd("declare -x ", 1);
+			ft_putstr_fd(tmp_3, 1);
+			free(tmp_3);
+			ft_putchar_fd('"', 1);
+			ft_putstr_fd(tmp_2, 1);
+			ft_putstr_fd("\"\n", 1);
+		}
+	}
+	else
+	{
+		tmp = info->simple_commands[i].argv[1];
+		set_env(info, tmp);
+	}
 }
 
 void	unset(int i, t_shell_info *info)
