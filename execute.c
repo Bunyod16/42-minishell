@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/06/22 16:18:27 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/24 01:18:58 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+
+extern int	g_errno;
 
 int	get_out_file(int tmpout, t_shell_info *info)
 {
@@ -58,6 +60,7 @@ void	save_fd_set_input(t_shell_info *info, t_exec *exec)
 		fdin = dup(exec->tmpin);
 	exec->fdin = fdin;
 	exec->pid = 111;
+	exec->status = 0;
 }
 
 static void	run_cmd(int i, t_shell_info *info)
@@ -136,6 +139,8 @@ void	executor(t_shell_info *info)
 		exec.pid = fork();
 		if (exec.pid == 0)
 			run_cmd(i, info);
+		waitpid(exec.pid, &exec.status, 0);
+		g_errno = WEXITSTATUS(exec.status);
 		is_no_fork_builtin(i, info);
 	}
 	restore_fd(&exec);
