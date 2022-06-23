@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/06/21 00:57:28 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:14:45 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int					write_to_heredoc(t_shell_info *info);
 
 /* builtins.c */
 void				echo(int i, t_shell_info *info);
-void				cd(int i, t_shell_info *info);
+void				cd(int i, t_shell_info *info, int forked);
 void				pwd(void);
 void				export(int i, t_shell_info *info);
 void				unset(int i, t_shell_info *info);

@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/06/21 00:09:22 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/22 16:18:27 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ static void	run_cmd(int i, t_shell_info *info)
 	else if (ft_strlen(cmd) == ft_strlen("env") \
 		&& !ft_strncmp(cmd, "env", ft_strlen("env")))
 		env(i, info);
+	else if (ft_strlen(cmd) == ft_strlen("cd") \
+		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
+		cd(i, info, 1);
 	else
 		run_binary(i, info);
 	exit(0);
@@ -81,14 +84,18 @@ static void	run_cmd(int i, t_shell_info *info)
 int	is_no_fork_builtin(int i, t_shell_info *info)
 {
 	char	*cmd;
+	int			forked;
 
 	i = 0;
+	forked = 0;
+	if (info->cmd_num == 0)
+		forked = 1;
 	cmd = info->simple_commands[i].argv[0];
 	if (ft_strlen(cmd) == ft_strlen("cd") \
 		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
 	{
-		cd(i, info);
-		return (1);
+		cd(i, info, 0);
+		return (0);
 	}
 	else if (ft_strlen(cmd) == ft_strlen("export") \
 		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
@@ -126,10 +133,10 @@ void	executor(t_shell_info *info)
 		}
 		dup2(exec.fdout, 1);
 		close(exec.fdout);
-		if (is_no_fork_builtin(i, info) == 0)
-			exec.pid = fork();
+		exec.pid = fork();
 		if (exec.pid == 0)
 			run_cmd(i, info);
+		is_no_fork_builtin(i, info);
 	}
 	restore_fd(&exec);
 }

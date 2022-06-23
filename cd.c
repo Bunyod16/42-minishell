@@ -13,7 +13,7 @@ int		find_len(char **arr)
 	return (i);
 }
 
-void	change_dir(t_shell_info *info, char *path)
+void	change_dir(t_shell_info *info, char *path, int forked)
 {
 	char	*cwd;
 	char	*temp;
@@ -22,7 +22,10 @@ void	change_dir(t_shell_info *info, char *path)
 		return ;
 	cwd = getcwd(NULL, 0);
 	if (chdir(path) != 0)
-		printf("cd: No such file or directory: %s\n", path);
+	{
+		if (forked)
+			ft_putstr_fd("cd: No such file or directory", 1);
+	}
 	else
 	{
 		unset_env(info, "OLDPWD");;
@@ -32,7 +35,7 @@ void	change_dir(t_shell_info *info, char *path)
 	}
 }
 
-void	cd(int i, t_shell_info *info)
+void	cd(int i, t_shell_info *info, int forked)
 {
 	int		len;
 	char *path;
@@ -40,20 +43,21 @@ void	cd(int i, t_shell_info *info)
 	len = find_len(info->simple_commands[i].argv);
 	if (len > 2)
 	{
-		printf("cd: Error, more than 2 arguements");
+		if (forked)
+			ft_putstr_fd("cd: Error, more than 2 arguements", 1);
 		return ;
 	}
 	else if (len == 1)
 	{
-		change_dir(info, get_env(&info->env, "HOME"));
+		change_dir(info, get_env(&info->env, "HOME"), forked);
 		return ;
 	}
 	else
 	{
 		path = info->simple_commands[i].argv[1];
 		if (ft_strncmp(path, "-", ft_strlen(path)) == 0)
-			change_dir(info, get_env(&info->env, "OLDPWD"));
+			change_dir(info, get_env(&info->env, "OLDPWD"), forked);
 		else
-			change_dir(info, path);
+			change_dir(info, path, forked);
 	}
 }
