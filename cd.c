@@ -28,9 +28,14 @@ void	change_dir(t_shell_info *info, char *path, int forked)
 	}
 	else
 	{
-		unset_env(info, "OLDPWD");;
+		unset_env(info, "OLDPWD");
 		temp = ft_strjoin("OLDPWD=", cwd);
 		set_env(info,temp);
+		free(temp);
+		cwd = getcwd(NULL, 0);
+		unset_env(info, "PWD");
+		temp = ft_strjoin("PWD=", cwd);
+		set_env(info, temp);
 		free(temp);
 	}
 }
