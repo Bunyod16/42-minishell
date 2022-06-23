@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/21 00:58:26 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/24 00:58:27 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		spacer(&line);
 		token_lst = lexer(&info.env, line);
-		if (!is_syntax_cmd(token_lst)) // TODO: errno stuff here
+		if (!is_syntax_cmd(token_lst) || token_lst == NULL) // TODO: errno stuff here
 			continue ;
 		parser(&token_lst, &info);
 		ft_lstclear(&token_lst, free);
