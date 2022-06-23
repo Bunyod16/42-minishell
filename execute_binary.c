@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 00:36:13 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/04/10 15:58:21 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/06/24 01:05:46 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,8 @@ int	run_binary(int num, t_shell_info *info)
 	{
 		execve(info->paths[i], info->simple_commands[num].argv, info->envp);
 	}
-	return (0);
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(info->simple_commands[num].argv[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
+	exit (127);
 }
