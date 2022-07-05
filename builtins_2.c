@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 22:01:47 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/20 12:11:38 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/06 00:33:44 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-void	env(int i, t_shell_info *info)
+void	env(t_shell_info *info)
 {
-	(void)i;
+	int	i;
 
 	i = 0;
 	while (info->envp[i])

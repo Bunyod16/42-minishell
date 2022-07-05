@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/06 00:30:15 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/06 00:33:19 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	run_cmd(int i, t_shell_info *info)
 		pwd();
 	else if (ft_strlen(cmd) == ft_strlen("env") \
 		&& !ft_strncmp(cmd, "env", ft_strlen("env")))
-		env(i, info);
+		env(info);
 	else if (ft_strlen(cmd) == ft_strlen("cd") \
 		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
 		cd(i, info, 1);
