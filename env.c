@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:50:40 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/30 21:29:35 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/06 00:23:14 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,14 @@
 void	set_env(t_shell_info *info, char *str)
 {
 	int		i;
+	char	*str_2;
+	char	*str_3;
 	char	**tmp;
 
+	str_2 = ft_strchr(str, '=');
+	str_3 = ft_substr(str, 0, ft_strlen(str) - ft_strlen(str_2));
+	unset_env(info, str_3);
+	free(str_3);
 	env_add_back(&info->env, env_new(str));
 	tmp = info->envp;
 	i = 0;
