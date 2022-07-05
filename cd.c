@@ -3,6 +3,8 @@
 #include "minishell.h"
 #include <stdio.h>
 
+extern int	g_errno;
+
 int		find_len(char **arr)
 {
 	int	i;
@@ -24,20 +26,20 @@ void	change_dir(t_shell_info *info, char *path, int forked)
 	if (chdir(path) != 0)
 	{
 		if (forked)
-			ft_putstr_fd("cd: No such file or directory", 1);
+			ft_putstr_fd("cd: No such file or directory\n", 1);
+		g_errno = 1;
+		return ;
 	}
-	else
-	{
-		unset_env(info, "OLDPWD");
-		temp = ft_strjoin("OLDPWD=", cwd);
-		set_env(info,temp);
-		free(temp);
-		cwd = getcwd(NULL, 0);
-		unset_env(info, "PWD");
-		temp = ft_strjoin("PWD=", cwd);
-		set_env(info, temp);
-		free(temp);
-	}
+	unset_env(info, "OLDPWD");
+	temp = ft_strjoin("OLDPWD=", cwd);
+	set_env(info,temp);
+	free(temp);
+	cwd = getcwd(NULL, 0);
+	unset_env(info, "PWD");
+	temp = ft_strjoin("PWD=", cwd);
+	set_env(info, temp);
+	free(temp);
+	g_errno = 1;
 }
 
 void	cd(int i, t_shell_info *info, int forked)
@@ -49,7 +51,7 @@ void	cd(int i, t_shell_info *info, int forked)
 	if (len > 2)
 	{
 		if (forked)
-			ft_putstr_fd("cd: Error, more than 2 arguements", 1);
+			ft_putstr_fd("cd: Error, more than 2 arguements\n", 1);
 		return ;
 	}
 	else if (len == 1)

@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/06/22 16:14:45 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/06/25 01:40:29 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_exec
 	int		tmpret;
 	int		fdin;
 	int		fdout;
+	int		status;
 	pid_t	pid;
 
 }	t_exec;
@@ -131,4 +132,10 @@ void				unset(int i, t_shell_info *info);
 /* builtins_2.c */
 void				env(int i, t_shell_info *info);
 
+/* exit.c */
+void    bin_exit(t_shell_info *info, int i);
+void	free_mem(t_shell_info *info);
+
+/* cd.c */
+int		find_len(char **arr);
 #endif
