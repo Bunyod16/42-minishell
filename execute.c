@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/05 19:38:31 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/06 00:30:15 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	run_cmd(int i, t_shell_info *info)
 	else if (ft_strlen(cmd) == ft_strlen("exit") \
 		&& !ft_strncmp(cmd, "exit", ft_strlen("exit")))
 		exit (0);
-		else if (ft_strlen(cmd) == ft_strlen("export") \
+	else if (ft_strlen(cmd) == ft_strlen("export") \
 		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
 		exit (0);
 	else if (ft_strlen(cmd) == ft_strlen("unset") \

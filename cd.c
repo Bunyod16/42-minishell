@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 00:26:44 by bshamsid          #+#    #+#             */
+/*   Updated: 2022/07/06 00:27:39 by hbaddrul         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 #include "minishell.h"
@@ -5,7 +17,7 @@
 
 extern int	g_errno;
 
-int		find_len(char **arr)
+int	find_len(char **arr)
 {
 	int	i;
 
@@ -32,7 +44,7 @@ void	change_dir(t_shell_info *info, char *path, int forked)
 	}
 	unset_env(info, "OLDPWD");
 	temp = ft_strjoin("OLDPWD=", cwd);
-	set_env(info,temp);
+	set_env(info, temp);
 	free(temp);
 	cwd = getcwd(NULL, 0);
 	unset_env(info, "PWD");
@@ -45,7 +57,7 @@ void	change_dir(t_shell_info *info, char *path, int forked)
 void	cd(int i, t_shell_info *info, int forked)
 {
 	int		len;
-	char *path;
+	char	*path;
 
 	len = find_len(info->simple_commands[i].argv);
 	if (len > 2)

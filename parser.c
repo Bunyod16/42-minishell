@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 00:55:22 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/24 00:58:49 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/06 00:26:16 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	find_out_file(t_list *token_lst, t_shell_info *info)
 	info->append = 0;
 	while (temp)
 	{
-		if (ft_strlen(temp->content) != 0 && ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0)
+		if (ft_strlen(temp->content) != 0 \
+			&& ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0)
 		{
 			if (ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0)
 				info->append = 1;
