@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/05 19:28:42 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/05 19:38:31 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ static void	run_cmd(int i, t_shell_info *info)
 		exit (0);
 		else if (ft_strlen(cmd) == ft_strlen("export") \
 		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
+		exit (0);
+	else if (ft_strlen(cmd) == ft_strlen("unset") \
+		&& !ft_strncmp(cmd, "unset", ft_strlen("unset")))
 		exit (0);
 	else
 		run_binary(i, info);
