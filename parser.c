@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 00:55:22 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/07/06 00:26:16 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/06 13:40:36 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,7 @@ t_simple_command	*find_pipes(t_list **token_lst, t_shell_info *info)
 	t_simple_command	*pipes;
 	t_list				*temp;
 
-	temp = *token_lst;
-	if (ft_strncmp(temp->content, "<", 1) == 0)
-		temp = temp->next->next;
+	temp = skip_infiles(*token_lst);
 	pipes = malloc(sizeof(t_simple_command) * (lst_cnt("|", temp) + 2));
 	pipes[0].argv = malloc(sizeof(char *) * (count_cmd(temp) + 1));
 	pipes = pipe_cut(temp, pipes, info);
@@ -67,7 +65,8 @@ void	find_out_file(t_list *token_lst, t_shell_info *info)
 	while (temp)
 	{
 		if (ft_strlen(temp->content) != 0 \
-			&& ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0)
+			&& (ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0
+			|| ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0))
 		{
 			if (ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0)
 				info->append = 1;
