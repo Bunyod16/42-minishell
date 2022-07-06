@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 00:55:22 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/07/06 13:40:36 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/06 18:25:18 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	find_out_file(t_list *token_lst, t_shell_info *info)
 			&& (ft_strncmp(temp->content, ">", ft_strlen(temp->content)) == 0
 			|| ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0))
 		{
-			if (ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0)
+			if (ft_strncmp(temp->content, ">>", ft_strlen(temp->content)) == 0
+			&& ft_strlen(temp->content) == 2)
 				info->append = 1;
 			info->outfile = ft_strdup(temp->next->content);
 		}
