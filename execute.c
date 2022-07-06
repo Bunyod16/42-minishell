@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/06 13:12:58 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/07 02:27:57 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	save_fd_set_input(t_shell_info *info, t_exec *exec)
 	exec->status = 0;
 }
 
-static void	run_cmd(int i, t_shell_info *info)
+static void	run_cmd(int i, t_shell_info *info, t_exec exec)
 {
 	const char	*cmd = info->simple_commands[i].argv[0];
 
@@ -89,7 +89,8 @@ static void	run_cmd(int i, t_shell_info *info)
 		&& !ft_strncmp(cmd, "unset", ft_strlen("unset")))
 		exit (0);
 	else
-		run_binary(i, info);
+		run_binary(i, info, exec);
+	free_all(info);
 	exit(0);
 }
 
@@ -126,6 +127,16 @@ int	is_no_fork_builtin(int i, t_shell_info *info)
 	return (0);
 }
 
+void    waitchild(int pid, int *exec_status)
+{
+    while (waitpid(pid, exec_status, 0) > 0)
+        ;
+    if (WIFSIGNALED(exec_status))
+        g_errno = 128 + WTERMSIG(exec_status);
+    else
+        g_errno = WEXITSTATUS(exec_status);
+}
+
 void	executor(t_shell_info *info)
 {
 	int			i;
@@ -149,10 +160,11 @@ void	executor(t_shell_info *info)
 		close(exec.fdout);
 		exec.pid = fork();
 		if (exec.pid == 0)
-			run_cmd(i, info);
-		waitpid(exec.pid, &exec.status, 0);
-		g_errno = WEXITSTATUS(exec.status);
+			run_cmd(i, info, exec);
 		is_no_fork_builtin(i, info);
 	}
+	free_mem(info);
+	waitchild(exec.pid, &exec.status);
 	restore_fd(&exec);
+	waitchild(-1, &exec.status);
 }

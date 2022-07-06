@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/06 13:33:21 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/07 02:27:20 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void				add_substr(char **str, int start, char *substr);
 void				rm_substr(char **str, int start, int len);
 
 /* execute_binary.c */
-int					run_binary(int cmd_num, t_shell_info *info);
+int					run_binary(int num, t_shell_info *info, t_exec exec);
 
 /* execute.c */
 void				executor(t_shell_info *info);
@@ -136,6 +136,7 @@ void				env(t_shell_info *info);
 /* exit.c */
 void				bin_exit(t_shell_info *info, int i);
 void				free_mem(t_shell_info *info);
+void				free_all(t_shell_info *info);
 
 /* cd.c */
 int					find_len(char **arr);

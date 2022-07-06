@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 00:36:13 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/06 04:12:39 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/07 03:07:50 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ static char	**create_paths(char *cmd, char **envp)
 	return (full_paths);
 }
 
-int	run_binary(int num, t_shell_info *info)
+int	run_binary(int num, t_shell_info *info, t_exec exec)
 {
 	int			i;
 
 	info->paths = create_paths(info->simple_commands[num].argv[0], info->envp);
 	i = -1;
+	close(exec.fdin);
+	close(exec.fdout);
 	while (info->paths[++i])
 	{
 		execve(info->paths[i], info->simple_commands[num].argv, info->envp);
@@ -52,5 +54,6 @@ int	run_binary(int num, t_shell_info *info)
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(info->simple_commands[num].argv[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
+	free_all (info);
 	exit (127);
 }

@@ -38,6 +38,20 @@ void	free_mem(t_shell_info *info)
 			free(info->simple_commands[i].argv[j++]);
 		i++;
 	}
+	free(info->simple_commands);
+}
+
+void	free_all(t_shell_info *info)
+{
+	int	i;
+
+	free_mem(info);
+	rl_clear_history();
+	env_clear(&info->env, free);
+	i = 0;
+	while (info->envp[i])
+		free(info->envp[i++]);
+	free(info->envp);
 }
 
 int	ft_isnum(char *str)
