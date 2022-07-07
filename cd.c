@@ -40,17 +40,20 @@ void	change_dir(t_shell_info *info, char *path, int forked)
 		if (forked)
 			ft_putstr_fd("cd: No such file or directory\n", 1);
 		g_errno = 1;
+		free(cwd);
 		return ;
 	}
 	unset_env(info, "OLDPWD");
 	temp = ft_strjoin("OLDPWD=", cwd);
 	set_env(info, temp);
 	free(temp);
+	free(cwd);
 	cwd = getcwd(NULL, 0);
 	unset_env(info, "PWD");
 	temp = ft_strjoin("PWD=", cwd);
 	set_env(info, temp);
 	free(temp);
+	free(cwd);
 	g_errno = 1;
 }
 
