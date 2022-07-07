@@ -33,7 +33,11 @@ static char	**create_paths(char *cmd, char **envp)
 	cmd = ft_strjoin("/", cmd);
 	i = -1;
 	while (paths[++i])
+	{
 		full_paths[i] = ft_strjoin(paths[i], cmd);
+		free(paths[i]);
+	}
+	free(paths);
 	full_paths[i] = cmd;
 	full_paths[i + 1] = 0;
 	return (full_paths);
@@ -50,7 +54,10 @@ int	run_binary(int num, t_shell_info *info, t_exec exec)
 	while (info->paths[++i])
 	{
 		execve(info->paths[i], info->simple_commands[num].argv, info->envp);
+		free(info->paths[i]);
+
 	}
+	free(info->paths);
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(info->simple_commands[num].argv[0], 2);
 	ft_putstr_fd(": command not found\n", 2);

@@ -20,38 +20,42 @@ extern int	g_errno;
 
 void	free_mem(t_shell_info *info)
 {
-	int		i;
-	int		j;
-
 	if (info->outfile)
 		free(info->outfile);
 	if (info->infile)
 		free(info->infile);
 	if (info->here_doc)
 		free(info->here_doc);
-	i = 0;
-	while (info->simple_commands && info->simple_commands[i].argv)
-	{
-		j = 0;
-		while (info->simple_commands[i].argv \
-			&& info->simple_commands[i].argv[j])
-			free(info->simple_commands[i].argv[j++]);
-		i++;
-	}
-	free(info->simple_commands);
 }
 
 void	free_all(t_shell_info *info)
 {
 	int	i;
 
-	free_mem(info);
-	rl_clear_history();
 	env_clear(&info->env, free);
+	free_simple_commands(info);
 	i = 0;
 	while (info->envp[i])
 		free(info->envp[i++]);
 	free(info->envp);
+	free_mem(info);
+}
+
+void	free_simple_commands(t_shell_info *info)
+{
+	int	num;
+	int	i;
+
+	num = 0;
+	while (num <= info->cmd_num)
+	{
+		i = 0;
+		while (i < info->simple_commands[num].argc \
+			&& info->simple_commands[num].argv[i])
+			free(info->simple_commands[num].argv[i++]);
+		free(info->simple_commands[num++].argv);
+	}
+	free(info->simple_commands);
 }
 
 int	ft_isnum(char *str)

@@ -127,9 +127,9 @@ int	is_no_fork_builtin(int i, t_shell_info *info)
 	return (0);
 }
 
-void    waitchild(int pid, int *exec_status)
+void    waitchild(int pid, int exec_status)
 {
-    while (waitpid(pid, exec_status, 0) > 0)
+    while (waitpid(pid, &exec_status, 0) > 0)
         ;
     if (WIFSIGNALED(exec_status))
         g_errno = 128 + WTERMSIG(exec_status);
@@ -163,8 +163,8 @@ void	executor(t_shell_info *info)
 			run_cmd(i, info, exec);
 		is_no_fork_builtin(i, info);
 	}
-	free_mem(info);
-	waitchild(exec.pid, &exec.status);
+	free_simple_commands(info);
+	waitchild(exec.pid, exec.status);
 	restore_fd(&exec);
-	waitchild(-1, &exec.status);
+	waitchild(-1, exec.status);
 }
