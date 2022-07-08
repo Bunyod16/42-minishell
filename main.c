@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		spacer(&line);
 		token_lst = lexer(&info.env, line);
-		if (is_syntax_cmd(token_lst) || token_lst != NULL)
+		if (is_syntax_cmd(token_lst) && token_lst != NULL)
 		{
 			parser(&token_lst, &info);
 			executor(&info);

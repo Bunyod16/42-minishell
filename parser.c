@@ -52,6 +52,7 @@ t_simple_command	*find_pipes(t_list **token_lst, t_shell_info *info)
 	temp = skip_infiles(*token_lst);
 	pipes = malloc(sizeof(t_simple_command) * (lst_cnt("|", temp) + 2));
 	pipes[0].argv = malloc(sizeof(char *) * (count_cmd(temp) + 1));
+	pipes[0].argv[0] = 0;
 	pipes = pipe_cut(temp, pipes, info);
 	return (pipes);
 }

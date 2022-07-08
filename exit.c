@@ -50,8 +50,9 @@ void	free_simple_commands(t_shell_info *info)
 	while (num <= info->cmd_num)
 	{
 		i = 0;
-		while (i < info->simple_commands[num].argc \
-			&& info->simple_commands[num].argv[i])
+
+		while (info->simple_commands[num].argv[i] \
+			&& i < info->simple_commands[num].argc)
 			free(info->simple_commands[num].argv[i++]);
 		free(info->simple_commands[num++].argv);
 	}

@@ -98,7 +98,6 @@ int	is_no_fork_builtin(int i, t_shell_info *info)
 {
 	char	*cmd;
 
-	i = 0;
 	cmd = info->simple_commands[i].argv[0];
 	if (ft_strlen(cmd) == ft_strlen("cd") \
 		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
