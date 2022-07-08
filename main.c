@@ -88,11 +88,12 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		spacer(&line);
 		token_lst = lexer(&info.env, line);
-		if (!is_syntax_cmd(token_lst) || token_lst == NULL)
-			continue ;
-		parser(&token_lst, &info);
+		if (is_syntax_cmd(token_lst) || token_lst != NULL)
+		{
+			parser(&token_lst, &info);
+			executor(&info);
+		}
 		ft_lstclear(&token_lst, free);
-		executor(&info);
 		free(line);
 	}
 }
