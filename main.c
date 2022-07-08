@@ -58,7 +58,6 @@ static void	update_prompt(t_shell_info *info)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int				i;
 	char			*line;
 	t_list			*token_lst;
 	t_shell_info	info;
@@ -75,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		update_prompt(&info);
 		line = readline(info.prompt);
 		free(info.prompt);
-		if (!line || (ft_strlen(line) == 4 && !ft_strncmp(line, "exit", 4)))
+		if (!line)
 			break ;
 		if (!ft_strlen(line))
 			continue ;
@@ -96,12 +95,4 @@ int	main(int argc, char **argv, char **envp)
 		executor(&info);
 		free(line);
 	}
-	rl_clear_history();
-	env_clear(&info.env, free);
-	i = 0;
-	while (info.envp[i])
-		free(info.envp[i++]);
-	free(info.envp);
-	ft_putendl_fd("exit", 1);
-	return (0);
 }
