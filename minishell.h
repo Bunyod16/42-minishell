@@ -135,7 +135,7 @@ void				env(t_shell_info *info);
 
 /* exit.c */
 void				bin_exit(t_shell_info *info, int i);
-void				free_mem(t_shell_info *info);
+void				free_inoutfile(t_shell_info *info);
 void				free_all(t_shell_info *info);
 void				free_simple_commands(t_shell_info *info);
 

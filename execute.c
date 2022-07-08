@@ -164,6 +164,7 @@ void	executor(t_shell_info *info)
 		is_no_fork_builtin(i, info);
 	}
 	free_simple_commands(info);
+	free_inoutfile(info);
 	waitchild(exec.pid, exec.status);
 	restore_fd(&exec);
 	waitchild(-1, exec.status);

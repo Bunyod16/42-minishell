@@ -18,7 +18,7 @@
 
 extern int	g_errno;
 
-void	free_mem(t_shell_info *info)
+void	free_inoutfile(t_shell_info *info)
 {
 	if (info->outfile)
 		free(info->outfile);
@@ -38,7 +38,7 @@ void	free_all(t_shell_info *info)
 	while (info->envp[i])
 		free(info->envp[i++]);
 	free(info->envp);
-	free_mem(info);
+	free_inoutfile(info);
 }
 
 void	free_simple_commands(t_shell_info *info)
@@ -98,7 +98,7 @@ void	bin_exit(t_shell_info *info, int i)
 	while (info->envp[i])
 		free(info->envp[i++]);
 	free(info->envp);
-	free_mem(info);
+	free_inoutfile(info);
 	ft_putendl_fd("exit", 1);
 	exit (exit_code);
 }
