@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/09 16:47:37 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/10 02:59:50 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int					exp_uns_shld_return(int i, char *str, int shld_free);
 void				env(t_shell_info *info);
 
 /* exit.c */
-void				bin_exit(t_shell_info *info, int i);
+void				bin_exit(t_shell_info *info, int i, int pid);
 void				free_inoutfile(t_shell_info *info);
 void				free_all(t_shell_info *info);
 void				free_simple_commands(t_shell_info *info);

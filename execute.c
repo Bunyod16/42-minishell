@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/10 02:17:41 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/10 03:17:50 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	run_cmd(int i, t_shell_info *info, t_exec exec)
 		cd(i, info, 1);
 	else if (ft_strlen(cmd) == ft_strlen("exit") \
 		&& !ft_strncmp(cmd, "exit", ft_strlen("exit")))
-		exit (0);
+		bin_exit(info, i, 0);
 	else if (ft_strlen(cmd) == ft_strlen("export") \
 		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
 		exit (0);
@@ -94,36 +94,25 @@ static void	run_cmd(int i, t_shell_info *info, t_exec exec)
 	exit(0);
 }
 
-int	is_no_fork_builtin(int i, t_shell_info *info)
+void	run_no_fork_builtin(int i, t_shell_info *info)
 {
 	char	*cmd;
 
 	cmd = info->simple_commands[i].argv[0];
+	if (i != 0)
+		return;
 	if (ft_strlen(cmd) == ft_strlen("cd") \
 		&& !ft_strncmp(cmd, "cd", ft_strlen("cd")))
-	{
 		cd(i, info, 0);
-		return (0);
-	}
 	else if (ft_strlen(cmd) == ft_strlen("export") \
 		&& !ft_strncmp(cmd, "export", ft_strlen("export")))
-	{
 		export(i, info);
-		return (1);
-	}
 	else if (ft_strlen(cmd) == ft_strlen("unset") \
 		&& !ft_strncmp(cmd, "unset", ft_strlen("unset")))
-	{
 		unset(i, info);
-		return (1);
-	}
 	else if (ft_strlen(cmd) == ft_strlen("exit") \
 		&& !ft_strncmp(cmd, "exit", ft_strlen("exit")))
-	{
-		bin_exit(info, i);
-		return (1);
-	}
-	return (0);
+		bin_exit(info, i, 1);
 }
 
 void	waitchild(int pid, int exec_status)
@@ -160,7 +149,7 @@ void	executor(t_shell_info *info)
 		exec.pid = fork();
 		if (exec.pid == 0)
 			run_cmd(i, info, exec);
-		is_no_fork_builtin(i, info);
+		run_no_fork_builtin(i, info);
 	}
 	free_simple_commands(info);
 	free_inoutfile(info);

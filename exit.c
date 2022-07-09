@@ -69,34 +69,32 @@ int	ft_isnum(char *str)
 	return (1);
 }
 
-void	bin_exit(t_shell_info *info, int i)
+void	bin_exit(t_shell_info *info, int i, int pid)
 {
 	int	len;
 	int	exit_code;
 
 	exit_code = 0;
 	len = find_len(info->simple_commands[i].argv);
-	// if not 1 arg too many args, give message and errno 1
-	if (len > 2)
+	if (len > 1 && ft_isnum(info->simple_commands[i].argv[1]) == 0)
 	{
-		ft_putstr_fd("Too many arguements\n", 1);
-		g_errno = 1;
-		return ;
-	}
-	if (ft_isnum(info->simple_commands[i].argv[1]) == 0)
-	{
-		ft_putstr_fd("Arguement must be numeric\n", 1);
+		if (pid != 0)
+			ft_putstr_fd("numeric arguement required\n", 2);
 		exit_code = 255;
 	}
-	if (len == 2 && ft_isnum(info->simple_commands[i].argv[1]) == 1)
+	else if (len > 2)
+	{
+		g_errno = 1;
+		if (pid == 1)
+			return ;
+		ft_putstr_fd("Too many arguements\n", 2);
+		exit_code = 1;
+	}
+	else if (len == 2 && ft_isnum(info->simple_commands[i].argv[1]) == 1)
 		exit_code = ft_atoi(info->simple_commands[i].argv[1]);
 	rl_clear_history();
-	env_clear(&info->env, free);
-	i = 0;
-	while (info->envp[i])
-		free(info->envp[i++]);
-	free(info->envp);
-	free_inoutfile(info);
-	ft_putendl_fd("exit", 1);
+	free_all(info);
+	if (pid != 0)
+		ft_putendl_fd("exit", 1);
 	exit (exit_code);
 }
