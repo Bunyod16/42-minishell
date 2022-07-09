@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/09 12:23:39 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/10 02:17:41 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,9 @@ void	waitchild(int pid, int exec_status)
 {
 	while (waitpid(pid, &exec_status, 0) > 0)
 		;
-	if (WIFSIGNALED(exec_status))
+	if (WIFSIGNALED(exec_status) && pid != -1)
 		g_errno = 128 + WTERMSIG(exec_status);
-	else
+	else if (pid != -1)
 		g_errno = WEXITSTATUS(exec_status);
 }
 
