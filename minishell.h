@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/09 16:05:35 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:47:37 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void				export(int i, t_shell_info *info);
 void				unset(int i, t_shell_info *info);
 
 /* builtins_2.c */
+int					exp_uns_shld_return(int i, char *str, int shld_free);
 void				env(t_shell_info *info);
 
 /* exit.c */

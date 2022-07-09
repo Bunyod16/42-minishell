@@ -6,15 +6,13 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 13:50:40 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/07/09 16:11:18 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:48:38 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "minishell.h"
 #include "libft/libft.h"
-
-extern int	g_errno;
 
 void	set_env(t_shell_info *info, char *str)
 {
@@ -23,27 +21,14 @@ void	set_env(t_shell_info *info, char *str)
 	char	*str_3;
 	char	**tmp;
 
-	if (!is_legal_identifier(0, str))
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(str, 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		g_errno = 1;
+	if (exp_uns_shld_return(0, str, 0))
 		return ;
-	}
 	str_2 = ft_strchr(str, '=');
 	if (str_2 == 0)
 		return ;
 	str_3 = ft_substr(str, 0, ft_strlen(str) - ft_strlen(str_2));
-	if (!is_legal_identifier(0, str_3))
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(str_3, 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		g_errno = 1;
-		free(str_3);
+	if (exp_uns_shld_return(0, str_3, 1))
 		return ;
-	}
 	unset_env(info, str_3);
 	free(str_3);
 	env_add_back(&info->env, env_new(str));
@@ -62,14 +47,8 @@ void	unset_env(t_shell_info *info, char *key)
 	t_env_list	*prev;
 	t_env_list	*tmp_env;
 
-	if (!is_legal_identifier(1, key))
-	{
-		ft_putstr_fd("minishell: unset: `", 2);
-		ft_putstr_fd(key, 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		g_errno = 1;
+	if (exp_uns_shld_return(1, key, 0))
 		return ;
-	}
 	tmp_env = info->env;
 	while (tmp_env)
 	{
