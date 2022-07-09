@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 15:38:53 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/30 21:56:04 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:06:47 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,25 @@ t_env_list	*env_new(char *str)
 	ret->full = ft_strdup(str);
 	ret->next = 0;
 	return (ret);
+}
+
+int	is_legal_identifier(int cmd, char *key)
+{
+	int	i;
+
+	if (key[0] != '_' && !ft_isalpha(key[0]))
+		return (0);
+	i = 0;
+	while (key[++i])
+	{
+		if (key[i] == '=')
+		{
+			if (cmd)
+				return (0);
+			return (1);
+		}
+		if (key[i] != '_' && !ft_isalnum(key[i]))
+			return (0);
+	}
+	return (1);
 }

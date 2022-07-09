@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:02:21 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/06/21 00:57:58 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:18:57 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*readline_quote(char **line)
 	if (!line_2)
 	{
 		ft_putendl_fd(\
-				"minishell: unexpected EOF while looking for matching `'", 2);
+			"minishell: unexpected EOF while looking for matching `'", 2);
 		free(*line);
 		*line = 0;
 		return (0);
@@ -105,8 +105,8 @@ void	dequoter(t_env_list **env, char **line)
 			quote = get_first_quote(&((*line)[i]));
 		if (quote != '\'' && (*line)[i] == '$' && (*line)[i + 1] == '?')
 			errno_helper(line, &i);
-		else if (quote != '\'' \
-			&& (*line)[i] == '$' && ft_isalpha((*line)[i + 1]))
+		else if (quote != '\'' && (*line)[i] == '$' \
+			&& (ft_isalpha((*line)[i + 1]) || (*line)[i + 1] == '_'))
 			expander(env, line, &i);
 		if (quote && (*line)[i] == quote)
 		{

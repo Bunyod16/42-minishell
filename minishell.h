@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/09 12:22:05 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/09 16:05:35 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char				**set_envp(t_env_list *env);
 t_env_list			*init_env(char **envp);
 
 /* env_utils.c */
+int					is_legal_identifier(int cmd, char *key);
 void				env_del(t_env_list *env, void (*del)(void *));
 void				env_clear(t_env_list **env, void (*del)(void *));
 void				env_add_back(t_env_list **env, t_env_list *new);
