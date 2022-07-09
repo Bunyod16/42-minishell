@@ -50,7 +50,6 @@ void	free_simple_commands(t_shell_info *info)
 	while (num <= info->cmd_num)
 	{
 		i = 0;
-
 		while (info->simple_commands[num].argv[i] \
 			&& i < info->simple_commands[num].argc)
 			free(info->simple_commands[num].argv[i++]);
@@ -77,7 +76,6 @@ void	bin_exit(t_shell_info *info, int i)
 
 	exit_code = 0;
 	len = find_len(info->simple_commands[i].argv);
-
 	// if not 1 arg too many args, give message and errno 1
 	if (len > 2)
 	{
@@ -92,7 +90,6 @@ void	bin_exit(t_shell_info *info, int i)
 	}
 	if (len == 2 && ft_isnum(info->simple_commands[i].argv[1]) == 1)
 		exit_code = ft_atoi(info->simple_commands[i].argv[1]);
-
 	rl_clear_history();
 	env_clear(&info->env, free);
 	i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/07 02:27:57 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/09 12:23:39 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,14 +126,14 @@ int	is_no_fork_builtin(int i, t_shell_info *info)
 	return (0);
 }
 
-void    waitchild(int pid, int exec_status)
+void	waitchild(int pid, int exec_status)
 {
-    while (waitpid(pid, &exec_status, 0) > 0)
-        ;
-    if (WIFSIGNALED(exec_status))
-        g_errno = 128 + WTERMSIG(exec_status);
-    else
-        g_errno = WEXITSTATUS(exec_status);
+	while (waitpid(pid, &exec_status, 0) > 0)
+		;
+	if (WIFSIGNALED(exec_status))
+		g_errno = 128 + WTERMSIG(exec_status);
+	else
+		g_errno = WEXITSTATUS(exec_status);
 }
 
 void	executor(t_shell_info *info)

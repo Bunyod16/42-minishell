@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/07 02:27:20 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/09 12:22:05 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int					count_cmd(t_list *token_lst);
 int					token_count(t_list *token_lst);
 t_simple_command	*pipe_cut(t_list *temp, t_simple_command *pipes, \
 						t_shell_info *info);
-t_list *	skip_infiles(t_list *token_lst);
+t_list				*skip_infiles(t_list *token_lst);
 
 /* here_doc.c */
 int					write_to_heredoc(t_shell_info *info);

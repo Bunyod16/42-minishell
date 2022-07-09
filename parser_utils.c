@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
+/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:07:44 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/06 13:46:09 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/09 12:21:27 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ t_simple_command	*pipe_cut(t_list *t, t_simple_command *p, t_shell_info *in)
 	return (p);
 }
 
-t_list *	skip_infiles(t_list *token_lst)
+t_list	*skip_infiles(t_list *token_lst)
 {
-	int i;
-	int last_input;
-	t_list *temp;
+	int		i;
+	int		last_input;
+	t_list	*temp;
 
 	temp = token_lst;
 	i = 1;
@@ -108,7 +108,7 @@ t_list *	skip_infiles(t_list *token_lst)
 	while (temp)
 	{
 		if (ft_strncmp(temp->content, "<", 1) == 0)
-			last_input = i+1;
+			last_input = i + 1;
 		i += 1;
 		temp = temp->next;
 	}
