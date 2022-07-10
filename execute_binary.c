@@ -16,6 +16,7 @@
 #include "minishell.h"
 #include <stdio.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 extern int	g_errno;
 
