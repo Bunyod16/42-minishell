@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 22:12:57 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/10 11:32:29 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/10 19:46:52 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	run_cmd(int i, t_shell_info *info, t_exec exec, char *cmd)
 	else
 		run_binary(i, info, exec);
 	free_all(info);
-	exit(0);
+	exit(g_errno);
 }
 
 void	run_no_fork_builtin(int i, t_shell_info *info)

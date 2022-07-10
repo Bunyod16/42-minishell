@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 00:26:44 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/10 10:40:52 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/10 19:46:46 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	change_dir(t_shell_info *info, char *path, int forked)
 	temp = ft_strjoin("PWD=", cwd);
 	set_env(info, temp);
 	free_tmp_cwd(temp, cwd);
-	g_errno = 1;
+	g_errno = 0;
 }
 
 void	cd(int i, t_shell_info *info, int forked)
@@ -71,6 +71,7 @@ void	cd(int i, t_shell_info *info, int forked)
 	{
 		if (forked)
 			ft_putstr_fd("cd: Error, more than 2 arguements\n", 1);
+		g_errno = 1;
 		return ;
 	}
 	else if (len == 1)
