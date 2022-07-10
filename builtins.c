@@ -6,7 +6,7 @@
 /*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 21:32:07 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/07/09 12:16:35 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/10 23:53:39 by hbaddrul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	empty_export(t_shell_info *info)
 	while (info->envp[++i])
 	{
 		tmp = info->envp[i];
-		tmp_2 = ft_strchr(tmp, '=');
+		tmp_2 = ft_strchr(tmp, '=') + 1;
 		tmp_3 = ft_substr(tmp, 0, ft_strlen(tmp) - ft_strlen(tmp_2));
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(tmp_3, 1);
