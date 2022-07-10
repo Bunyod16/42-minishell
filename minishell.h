@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/10 11:33:43 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/10 19:34:03 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void				parser(t_list **token_lst, t_shell_info *info);
 /* str_utils.c */
 void				add_substr(char **str, int start, char *substr);
 void				rm_substr(char **str, int start, int len);
+int					process_line(char **line, int can_free);
 
 /* execute_binary.c */
 int					run_binary(int num, t_shell_info *info, t_exec exec);

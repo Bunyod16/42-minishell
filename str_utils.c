@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 11:43:38 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/01/30 01:19:34 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:35:33 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,17 @@ void	rm_substr(char **str, int start, int len)
 	tmp[1] = *str;
 	*str = tmp[0];
 	free(tmp[1]);
+}
+
+int	process_line(char **line, int can_free)
+{
+	if (!*line)
+		return (0);
+	if (!ft_strlen(*line))
+	{
+		if (can_free == 1)
+			free(*line);
+		return (-1);
+	}
+	return (1);
 }

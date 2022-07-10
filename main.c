@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/07/10 11:24:47 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/10 19:33:58 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,16 @@ void	mainloop(t_shell_info info, t_list *token_lst, char *line)
 		update_prompt(&info);
 		line = readline(info.prompt);
 		free(info.prompt);
-		if (!line)
+		if (process_line(&line, 0) == 0)
 			break ;
-		if (!ft_strlen(line))
+		if (process_line(&line, 1) == -1)
 			continue ;
 		quoter(&line);
 		piper(&line);
 		if (!line)
 		{
 			ft_putendl_fd("minishell: syntax error: unexpected end of file", 2);
+			free(line);
 			continue ;
 		}
 		add_history(line);
