@@ -52,4 +52,5 @@ void	errno_helper(char **line, int *i)
 	errno = ft_itoa(g_errno);
 	add_substr(line, *i, errno);
 	*i += ft_strlen(errno) - 1;
+	free(errno);
 }
