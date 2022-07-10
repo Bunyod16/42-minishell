@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 12:29:32 by hbaddrul          #+#    #+#             */
-/*   Updated: 2022/07/07 02:14:34 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/10 11:24:47 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,14 @@ static void	update_prompt(t_shell_info *info)
 	info->simple_commands = NULL;
 }
 
-int	main(int argc, char **argv, char **envp)
+void	parse_execute(t_shell_info *info, t_list **token_lst)
 {
-	char			*line;
-	t_list			*token_lst;
-	t_shell_info	info;
+	parser(token_lst, info);
+	executor(info);
+}
 
-	(void)argv;
-	if (argc != 1)
-		return (1);
-	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
-		perror("signal error");
-	info.env = init_env(envp);
-	info.envp = set_envp(info.env);
+void	mainloop(t_shell_info info, t_list *token_lst, char *line)
+{
 	while (1)
 	{
 		update_prompt(&info);
@@ -89,11 +84,26 @@ int	main(int argc, char **argv, char **envp)
 		spacer(&line);
 		token_lst = lexer(&info.env, line);
 		if (is_syntax_cmd(token_lst) && token_lst != NULL)
-		{
-			parser(&token_lst, &info);
-			executor(&info);
-		}
+			parse_execute(&info, &token_lst);
 		ft_lstclear(&token_lst, free);
 		free(line);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char			*line;
+	t_list			*token_lst;
+	t_shell_info	info;
+
+	(void)argv;
+	if (argc != 1)
+		return (1);
+	if (signal(SIGINT, action) == SIG_ERR || signal(SIGQUIT, action) == SIG_ERR)
+		perror("signal error");
+	info.env = init_env(envp);
+	info.envp = set_envp(info.env);
+	line = NULL;
+	token_lst = NULL;
+	mainloop(info, token_lst, line);
 }
