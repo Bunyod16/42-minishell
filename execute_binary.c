@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 00:36:13 by bunyodshams       #+#    #+#             */
-/*   Updated: 2022/07/09 12:19:50 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:35:50 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,28 @@
 #include "libft/libft.h"
 #include "minishell.h"
 #include <stdio.h>
+#include <fcntl.h>
+
+extern int	g_errno;
+
+void	restore_fd(t_exec *exec)
+{
+	dup2(exec->tmpin, 0);
+	dup2(exec->tmpout, 1);
+	close(exec->tmpin);
+	close(exec->tmpout);
+	waitpid(exec->pid, &exec->tmpret, 0);
+}
+
+void	waitchild(int pid, int exec_status)
+{
+	while (waitpid(pid, &exec_status, 0) > 0)
+		;
+	if (WIFSIGNALED(exec_status) && pid != -1)
+		g_errno = 128 + WTERMSIG(exec_status);
+	else if (pid != -1)
+		g_errno = WEXITSTATUS(exec_status);
+}
 
 static char	**create_paths(char *cmd, char **envp)
 {
@@ -41,6 +63,24 @@ static char	**create_paths(char *cmd, char **envp)
 	full_paths[i] = cmd;
 	full_paths[i + 1] = 0;
 	return (full_paths);
+}
+
+int	get_out_file(int tmpout, t_shell_info *info)
+{
+	int	fdout;
+
+	if (info->outfile)
+	{
+		if (info->append > 0)
+			fdout = open(info->outfile, O_APPEND | O_CREAT | O_RDWR,
+					S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP);
+		else
+			fdout = open(info->outfile, O_RDWR | O_CREAT,
+					S_IWUSR | S_IRUSR | S_IROTH | S_IRGRP);
+	}
+	else
+		fdout = dup(tmpout);
+	return (fdout);
 }
 
 int	run_binary(int num, t_shell_info *info, t_exec exec)

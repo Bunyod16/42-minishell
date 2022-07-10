@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaddrul <hbaddrul@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 00:26:44 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/06 00:27:39 by hbaddrul         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:40:52 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ int	find_len(char **arr)
 	while (arr && arr[i])
 		i++;
 	return (i);
+}
+
+void	free_tmp_cwd(char	*temp,	char *cwd)
+{
+	free(temp);
+	free(cwd);
 }
 
 void	change_dir(t_shell_info *info, char *path, int forked)
@@ -46,14 +52,12 @@ void	change_dir(t_shell_info *info, char *path, int forked)
 	unset_env(info, "OLDPWD");
 	temp = ft_strjoin("OLDPWD=", cwd);
 	set_env(info, temp);
-	free(temp);
-	free(cwd);
+	free_tmp_cwd(temp, cwd);
 	cwd = getcwd(NULL, 0);
 	unset_env(info, "PWD");
 	temp = ft_strjoin("PWD=", cwd);
 	set_env(info, temp);
-	free(temp);
-	free(cwd);
+	free_tmp_cwd(temp, cwd);
 	g_errno = 1;
 }
 

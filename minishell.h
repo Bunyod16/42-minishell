@@ -6,7 +6,7 @@
 /*   By: bunyodshams <bunyodshams@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 12:59:53 by bshamsid          #+#    #+#             */
-/*   Updated: 2022/07/10 02:59:50 by bunyodshams      ###   ########.fr       */
+/*   Updated: 2022/07/10 11:33:43 by bunyodshams      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,12 @@ void				rm_substr(char **str, int start, int len);
 
 /* execute_binary.c */
 int					run_binary(int num, t_shell_info *info, t_exec exec);
+void				waitchild(int pid, int exec_status);
+int					get_out_file(int tmpout, t_shell_info *info);
 
 /* execute.c */
 void				executor(t_shell_info *info);
+void				restore_fd(t_exec *exec);
 
 /*parser_utils.c */
 int					lst_cnt(char *str, t_list *token_lst);
@@ -136,7 +139,7 @@ int					exp_uns_shld_return(int i, char *str, int shld_free);
 void				env(t_shell_info *info);
 
 /* exit.c */
-void				bin_exit(t_shell_info *info, int i, int pid);
+void				bin_exit(t_shell_info *info, int i, int pid, int len);
 void				free_inoutfile(t_shell_info *info);
 void				free_all(t_shell_info *info);
 void				free_simple_commands(t_shell_info *info);

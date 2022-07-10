@@ -69,13 +69,11 @@ int	ft_isnum(char *str)
 	return (1);
 }
 
-void	bin_exit(t_shell_info *info, int i, int pid)
+void	bin_exit(t_shell_info *info, int i, int pid, int len)
 {
-	int	len;
 	int	exit_code;
 
 	exit_code = 0;
-	len = find_len(info->simple_commands[i].argv);
 	if (len > 1 && ft_isnum(info->simple_commands[i].argv[1]) == 0)
 	{
 		if (pid != 0)
